@@ -1,16 +1,25 @@
 {% load static %}
+{% load cache_bust %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?{% cache_bust %}">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Welcome, {{ user.username }}!</h1>
-    <p>This is your dashboard</p>
-    <a href="{% url 'logout' %}">Log Out</a>
-    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/script.js' %}?{% cache_bust %}"></script>
+
+    <header class="p-4 bg-blue-500 text-white">
+        <h1 class="text-xl">My Django Project</h1>
+    </header>
+    <main class="p-4">
+        <h1>Welcome, {{ user.username }}!</h1>
+        <p>This is your dashboard</p>
+        <a href="{% url 'logout' %}">Log Out</a>
+    </main>
 </body>
 </html>
