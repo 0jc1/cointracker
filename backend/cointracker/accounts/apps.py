@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class CointrackerConfig(AppConfig):
+class AccountsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'cointracker'
+    name = 'accounts'
