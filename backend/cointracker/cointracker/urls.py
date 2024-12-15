@@ -17,9 +17,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from accounts.views import index_view  # Suppose you have an index_view
+from .views import (
+    donate_view, login_view, portfolio_view, 
+    settings_view, signup_view, transactions_view
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index_view, name='index'),
-    path('accounts/', include('accounts.urls')),
+    path('donate/', donate_view, name='donate'),
+    path('login/', login_view, name='login'),
+    path('portfolio/', portfolio_view, name='portfolio'),
+    path('settings/', settings_view, name='settings'),
+    path('sign-up/', signup_view, name='sign-up'),
+    path('transactions/', transactions_view, name='transactions'),
+    path('accounts/', include('accounts.urls')),  # Assuming this is for authentication
 ]
