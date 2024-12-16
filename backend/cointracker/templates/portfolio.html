@@ -28,19 +28,7 @@
 
 <body class="body">
   {% include "navbar.html" %}
-  <div data-duration-in="300" data-duration-out="100" data-current="Tab 1" data-easing="ease" class="f-tab w-tabs">
-    <div class="f-tab-menu w-tab-menu">
-      <a data-w-tab="Tab 1" class="f-tab-button-line w-inline-block w-tab-link w--current">
-        <div>Portfolio</div>
-      </a>
-      <a data-w-tab="Tab 2" class="f-tab-button-line w-inline-block w-tab-link">
-        <div>Transactions</div>
-      </a>
-      <a data-w-tab="Tab 3" class="f-tab-button-line w-inline-block w-tab-link">
-        <div>Settings</div>
-      </a>
-    </div>
-  </div>
+  {% include "tab.html" %}
   <section>
     <div class="w-layout-blockcontainer container-3 w-container">
       <h1>Portfolio</h1>

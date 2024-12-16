@@ -1,0 +1,15 @@
+{% load static %}
+
+<div class="f-tab">
+    <div class="f-tab-menu w-tab-menu" >
+        <a href="{% url 'portfolio' %}" class="f-tab-button-line w-inline-block w-tab-link {% if request.resolver_match.url_name == 'portfolio' %}w--current{% endif %}">
+            <div>Portfolio</div>
+          </a>
+          <a href="{% url 'transactions' %}" class="f-tab-button-line w-inline-block w-tab-link {% if request.resolver_match.url_name == 'transactions' %}w--current{% endif %}">
+            <div>Transactions</div>
+          </a>
+          <a href="{% url 'settings' %}" class="f-tab-button-line w-inline-block w-tab-link {% if request.resolver_match.url_name == 'settings' %}w--current{% endif %}">
+            <div>Settings</div>
+          </a>
+    </div>
+  </div>
