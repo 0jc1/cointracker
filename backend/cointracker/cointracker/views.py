@@ -5,7 +5,12 @@ def my404_view(request, exception):
     return render(request, '404.html', {}, status=404)
 
 def index_view(request):
-    return render(request, 'index.html')
+    coins = [
+        {'ticker': 'btc', 'price': 100000},
+        {'ticker': 'eth', 'price': 5000},
+        {'ticker': 'ltc', 'price': 300},
+    ]
+    return render(request, 'index.html', {'coins': coins})
 
 def donate_view(request):
     return render(request, 'donate.html')
