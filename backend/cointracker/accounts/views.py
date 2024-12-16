@@ -14,11 +14,11 @@ def signup_view(request):
             return redirect('index')  # Redirect to a page that shows user is logged in
     else:
         form = SignUpForm()
-    return render(request, 'accounts/signup.html', {'form': form})
+    return render(request, 'sign-up.html', {'form': form})
 
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect('index')
+        return redirect('portfolio')
 
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -31,15 +31,10 @@ def login_view(request):
                 return redirect('index')
     else:
         form = AuthenticationForm()
-    return render(request, 'accounts/login.html', {'form': form})
+    return render(request, 'login.html', {'form': form})
 
 @login_required
 def logout_view(request):
     logout(request)
     return redirect('login')
-
-@login_required
-def index_view(request):
-    # This page requires login, so if user is logged in they can see their welcome dashboard
-    return render(request, 'index.html')
 

@@ -16,10 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from accounts.views import index_view  # Suppose you have an index_view
+from accounts.views import signup_view, login_view, logout_view
 from .views import (
-    donate_view, login_view, portfolio_view, 
-    settings_view, signup_view, transactions_view
+    donate_view, portfolio_view, index_view,
+    settings_view, transactions_view
 )
 
 urlpatterns = [
@@ -31,5 +31,5 @@ urlpatterns = [
     path('settings/', settings_view, name='settings'),
     path('sign-up/', signup_view, name='sign-up'),
     path('transactions/', transactions_view, name='transactions'),
-    path('accounts/', include('accounts.urls')),  # Assuming this is for authentication
+    path('logout/', logout_view, name="logout")
 ]

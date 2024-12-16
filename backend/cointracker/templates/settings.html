@@ -23,56 +23,7 @@
     <link href="{% static 'images/webclip.png' %}" rel="apple-touch-icon">
 </head>
 <body>
-  <div class="navbar-no-shadow ok">
-    <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-no-shadow-container w-nav">
-      <div class="container-regular">
-        <div class="navbar-wrapper">
-          <a href="#" class="navbar-brand w-nav-brand"><img src="{% static 'images/Screenshot-2024-12-14-at-3.41.46-PM.png' %}" loading="lazy" width="180" alt="" class="image-2"></a>
-          <nav role="navigation" class="nav-menu-wrapper w-nav-menu">
-            <ul role="list" class="nav-menu w-list-unstyled">
-              <li>
-                <a href="#" class="nav-link">Home</a>
-              </li>
-              <li>
-                <div data-hover="false" data-delay="0" class="nav-dropdown w-dropdown">
-                  <div class="nav-dropdown-toggle w-dropdown-toggle">
-                    <div class="nav-dropdown-icon w-icon-dropdown-toggle"></div>
-                    <div>Cryptocurrencies</div>
-                  </div>
-                  <nav class="nav-dropdown-list shadow-three mobile-shadow-hide w-dropdown-list">
-                    <a href="#" class="nav-dropdown-link w-dropdown-link">Resource Link 1</a>
-                    <a href="#" class="nav-dropdown-link w-dropdown-link">Resource Link 2</a>
-                    <a href="#" class="nav-dropdown-link w-dropdown-link">Resource Link 3</a>
-                  </nav>
-                </div>
-              </li>
-              <li>
-                <div data-hover="false" data-delay="0" class="nav-dropdown w-dropdown">
-                  <div class="nav-dropdown-toggle w-dropdown-toggle">
-                    <div class="nav-dropdown-icon w-icon-dropdown-toggle"></div>
-                    <div>More</div>
-                  </div>
-                  <nav class="nav-dropdown-list shadow-three mobile-shadow-hide w-dropdown-list">
-                    <a href="#" class="nav-dropdown-link w-dropdown-link">Resource Link 1</a>
-                    <a href="#" class="nav-dropdown-link w-dropdown-link">Resource Link 2</a>
-                    <a href="#" class="nav-dropdown-link w-dropdown-link">Resource Link 3</a>
-                  </nav>
-                </div>
-              </li>
-              <li class="mobile-margin-top-10">
-                <div class="nav-button-wrapper">
-                  <a href="#" class="button-primary w-button">LOGIN</a>
-                </div>
-              </li>
-            </ul>
-          </nav>
-          <div class="menu-button w-nav-button">
-            <div class="w-icon-nav-menu"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  {% include "navbar.html" %}
   <div data-duration-in="300" data-duration-out="100" data-current="Tab 1" data-easing="ease" class="f-tab w-tabs">
     <div class="f-tab-menu w-tab-menu">
       <a data-w-tab="Tab 1" class="f-tab-button-line w-inline-block w-tab-link w--current">
