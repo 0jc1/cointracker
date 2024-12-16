@@ -780,6 +780,15 @@
   box-shadow: 0 2px 5px #0003;
 }
 
+.div-block-5 {
+  background-color: #e9e9e900;
+  border-radius: 10px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  padding: 3px;
+  box-shadow: 0 2px 5px #0003;
+}
+
 .text-block-5 {
   text-align: center;
   padding: 5px;
@@ -804,7 +813,7 @@
 }
 
 .grid {
-  grid-row-gap: 0px;
+  grid-row-gap: 1px;
   grid-template-rows: auto auto auto;
   grid-template-areas: "Area Area-2"
                        "Area ."

@@ -23,8 +23,12 @@
       <div id="w-node-_6dd13574-8b27-f102-1203-d8ea927a9749-dc1d944a" class="div-block-4">
         <div class="text-block-5">24h Change</div>
         <div class="text-block-6">+$300</div>
-      </div><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg"
-        loading="lazy" width="177" height="300" alt="" id="w-node-_861882ed-265b-6952-0723-f257c3d4845d-dc1d944a">
+      </div>
+    
+      <div class="div-block-5">
+        <canvas id="canvas1" style="width: 100%" height="300" aria-label="Chart" ></canvas>
+      </div>
+
       <div id="w-node-_307dbd9c-87c5-f83e-15fa-66756278fea8-dc1d944a" class="div-block-4">
         <table class="table_component">
           <caption class="table_caption">Holdings</caption>
@@ -83,5 +87,10 @@
     </div>
   </div>
 </section>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment"></script>
+
+<script type="module" src="{% static 'js/portfolio.js' %}?v=1"></script>
 
 {% endblock content %}
