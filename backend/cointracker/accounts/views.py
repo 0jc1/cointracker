@@ -11,7 +11,7 @@ def signup_view(request):
             user = form.save()
             # Automatically log the user in after signup
             login(request, user)
-            return redirect('index')  # Redirect to a page that shows user is logged in
+            return redirect('portfolio')  # Redirect to a page that shows user is logged in
     else:
         form = SignUpForm()
     return render(request, 'sign-up.html', {'form': form})

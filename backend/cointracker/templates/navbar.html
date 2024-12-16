@@ -1,53 +1,64 @@
-
 {% load static %}
 
 <div class="navbar-no-shadow ok">
-    <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-no-shadow-container w-nav">
-      <div class="container-regular">
-        <div class="navbar-wrapper">
-          <a href="{% url 'index' %}" class="navbar-brand w-nav-brand"><img src="{% static 'images/Screenshot-2024-12-14-at-3.41.46-PM.png' %}" loading="lazy" width="180" alt="" class="image-2"></a>
-          <nav role="navigation" class="nav-menu-wrapper w-nav-menu">
-            <ul role="list" class="nav-menu w-list-unstyled">
-              <li>
-                <a href="{% url 'index' %}" class="nav-link">Home</a>
-              </li>
-              <li>
-                <div data-hover="false" data-delay="0" class="nav-dropdown w-dropdown">
-                  <div class="nav-dropdown-toggle w-dropdown-toggle">
-                    <div class="nav-dropdown-icon w-icon-dropdown-toggle"></div>
-                    <div>Cryptocurrencies</div>
-                  </div>
-                  <nav class="nav-dropdown-list shadow-three mobile-shadow-hide w-dropdown-list">
-                    <a href="#" class="nav-dropdown-link w-dropdown-link">Resource Link 1</a>
-                    <a href="#" class="nav-dropdown-link w-dropdown-link">Resource Link 2</a>
-                    <a href="#" class="nav-dropdown-link w-dropdown-link">Resource Link 3</a>
-                  </nav>
+  <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease"
+    role="banner" class="navbar-no-shadow-container w-nav">
+    <div class="container-regular">
+      <div class="navbar-wrapper">
+        <a href="{% url 'index' %}" class="navbar-brand w-nav-brand"><img src="{% static 'images/logo.png' %}"
+            loading="lazy" width="180" alt="" class="image-2"></a>
+        <nav role="navigation" class="nav-menu-wrapper w-nav-menu">
+          <ul role="list" class="nav-menu w-list-unstyled">
+            <li>
+              <a href="{% url 'index' %}" class="nav-link">Home</a>
+            </li>
+            <li>
+              <a href="{% url 'portfolio' %}" class="nav-link">Portfolio</a>
+            </li>
+            <li>
+              <div data-hover="false" data-delay="0" class="nav-dropdown w-dropdown">
+                <div class="nav-dropdown-toggle w-dropdown-toggle">
+                  <div class="nav-dropdown-icon w-icon-dropdown-toggle"></div>
+                  <div>Cryptocurrencies</div>
                 </div>
-              </li>
-              <li>
-                <div data-hover="false" data-delay="0" class="nav-dropdown w-dropdown">
-                  <div class="nav-dropdown-toggle w-dropdown-toggle">
-                    <div class="nav-dropdown-icon w-icon-dropdown-toggle"></div>
-                    <div>More</div>
-                  </div>
-                  <nav class="nav-dropdown-list shadow-three mobile-shadow-hide w-dropdown-list">
-                    <a href="#" class="nav-dropdown-link w-dropdown-link">Resource Link 1</a>
-                    <a href="#" class="nav-dropdown-link w-dropdown-link">Resource Link 2</a>
-                    <a href="#" class="nav-dropdown-link w-dropdown-link">Resource Link 3</a>
-                  </nav>
+                <nav class="nav-dropdown-list shadow-three mobile-shadow-hide w-dropdown-list">
+                  <a href="#" class="nav-dropdown-link w-dropdown-link">Resource Link 1</a>
+                  <a href="#" class="nav-dropdown-link w-dropdown-link">Resource Link 2</a>
+                  <a href="#" class="nav-dropdown-link w-dropdown-link">Resource Link 3</a>
+                </nav>
+              </div>
+            </li>
+            <li>
+              <div data-hover="false" data-delay="0" class="nav-dropdown w-dropdown">
+                <div class="nav-dropdown-toggle w-dropdown-toggle">
+                  <div class="nav-dropdown-icon w-icon-dropdown-toggle"></div>
+                  <div>More</div>
                 </div>
-              </li>
-              <li class="mobile-margin-top-10">
-                <div class="nav-button-wrapper">
-                  <a href="{% url 'login' %}" class="button-primary w-button">LOGIN</a>
-                </div>
-              </li>
-            </ul>
-          </nav>
-          <div class="menu-button w-nav-button">
-            <div class="w-icon-nav-menu"></div>
-          </div>
+                <nav class="nav-dropdown-list shadow-three mobile-shadow-hide w-dropdown-list">
+                  <a href="#" class="nav-dropdown-link w-dropdown-link">Resource Link 1</a>
+                  <a href="#" class="nav-dropdown-link w-dropdown-link">Resource Link 2</a>
+                  <a href="#" class="nav-dropdown-link w-dropdown-link">Resource Link 3</a>
+                </nav>
+              </div>
+            </li>
+            <li class="mobile-margin-top-10">
+              <div class="nav-button-wrapper">
+
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="button-primary w-button">LOGOUT</a>
+
+                {% else %}
+                <a href="{% url 'login' %}" class="button-primary w-button">LOGIN</a>
+                {% endif %}
+
+              </div>
+            </li>
+          </ul>
+        </nav>
+        <div class="menu-button w-nav-button">
+          <div class="w-icon-nav-menu"></div>
         </div>
       </div>
     </div>
   </div>
+</div>

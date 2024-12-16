@@ -38,29 +38,35 @@
           data-wf-page-id="675c5a4aa1a58b00347e8b41" data-wf-element-id="92bc5fc9-16e1-58fa-6ceb-aae4b4e36c44">
           {% csrf_token %}
           <!-- Display non-field errors if any -->
-          {{ form.non_field_errors }}
+
           <div class="f-field-wrapper">
             <div class="f-field-label">Username</div>
-            <!-- Display errors for username field if any -->
-            {{ form.username.errors }}
+
             <!-- Use the name="username" field to match Django's auth form -->
             <input class="f-field-input w-input" type="text" name="username" id="username" required>
           </div>
           <div class="f-field-wrapper">
             <div class="f-field-label">Password</div>
-            {{ form.password.errors }}
             <input class="f-field-input w-input" type="password" name="password" id="password" required>
           </div>
           <input type="submit" data-wait="Please wait..." class="submit-button w-button" value="Submit">
           <div class="text-block-4">Don&#x27;t have an account? <a href="{% url 'sign-up' %}">Sign up.</a>
           </div>
         </form>
-        <div class="w-form-done">
-          <div>Thank you! Your submission has been received!</div>
+        <div class="w-form-fail" style="display: {% if form.errors %}block{% else %}none{% endif %};">
+          <div>Oops! Something went wrong while submitting the form:</div>
+          <ul>
+            {% for field in form %}
+              {% if field.errors %}
+                {{ field.label }}: {{ field.errors.as_text }}
+              {% endif %}
+            {% endfor %}
+            {% if form.non_field_errors %}
+              {{ form.non_field_errors }}
+            {% endif %}
+          </ul>
         </div>
-        <div class="w-form-fail">
-          <div>Oops! Something went wrong while submitting the form.</div>
-        </div>
+
       </div>
     </div>
   </div>
