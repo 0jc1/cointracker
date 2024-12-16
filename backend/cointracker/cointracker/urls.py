@@ -16,16 +16,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import handler404
+
 from accounts.views import signup_view, login_view, logout_view
 from .views import (
     donate_view, portfolio_view, index_view,
-    settings_view, transactions_view
+    settings_view, transactions_view, about_view, my404_view
 )
+
+handler404 = my404_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index_view, name='index'),
+    path('home/', index_view, name='index'),
     path('donate/', donate_view, name='donate'),
+    path('about/', about_view, name='about'),
     path('login/', login_view, name='login'),
     path('portfolio/', portfolio_view, name='portfolio'),
     path('settings/', settings_view, name='settings'),

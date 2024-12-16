@@ -1,10 +1,17 @@
 from django.shortcuts import render, redirect
 
+def my404_view(request, exception):
+    # exception contains information about what caused the 404
+    return render(request, '404.html', {}, status=404)
+
 def index_view(request):
     return render(request, 'index.html')
 
 def donate_view(request):
     return render(request, 'donate.html')
+
+def about_view(request):
+    return render(request, 'about.html')
 
 def login_view(request):
     return render(request, 'login.html')
