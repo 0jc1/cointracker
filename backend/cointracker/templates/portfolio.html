@@ -59,6 +59,7 @@
               <th class="table_header">Name</th>
               <th class="table_header">Value</th>
               <th class="table_header">Allocation</th>
+              <th class="table_header">Action</th>
             </tr>
           </thead>
           <tbody class="table_body">
@@ -66,27 +67,47 @@
               <td class="table_cell1">Wallet 1</td>
               <td class="table_cell1">$3263</td>
               <td class="table_cell1">33%</td>
+              <td class="table_cell1">
+                <a href="#" class="f-button-action w-button w-inline-block">
+                  <div>Remove</div>
+                </a>
+              </td>
             </tr>
             <tr class="table_row">
               <td class="table_cell1">Wallet 2</td>
               <td class="table_cell1">$352</td>
               <td class="table_cell1">33%</td>
+              <td class="table_cell1">
+                <a href="#" class=" w-inline-block f-button-action w-button">
+                  <div>Remove</div>
+                </a>
+              </td>
             </tr>
             <tr class="table_row">
               <td class="table_cell1">Wallet 3</td>
               <td class="table_cell1">$3532</td>
               <td class="table_cell1">33%</td>
+              <td class="table_cell1">
+                <a href="#" class="f-button-action w-button w-inline-block">
+                  <div>Remove</div>
+                </a>
+              </td>
             </tr>
           </tbody>
           <caption class="table_caption">Wallets</caption>
         </table>
-        <a href="#" class="f-button-apple w-inline-block">
+        <a href="#" class="f-button-apple w-inline-block" id ="openModalBtn">
           <div>Add Wallet</div>
         </a>
       </div>
     </div>
   </div>
+
+
 </section>
+
+{% include "modal.html" %}
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment"></script>
