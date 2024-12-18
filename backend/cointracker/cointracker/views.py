@@ -1,15 +1,21 @@
 from django.shortcuts import render, redirect
+from services.crypto_price import get_cached_or_refresh_prices
 
 def my404_view(request, exception):
     # exception contains information about what caused the 404
     return render(request, '404.html', {}, status=404)
 
 def index_view(request):
-    coins = [
-        {'ticker': 'btc', 'price': 100000},
-        {'ticker': 'eth', 'price': 5000},
-        {'ticker': 'ltc', 'price': 300},
-    ]
+    # Retrieve cached prices without blocking
+    prices = get_cached_or_refresh_prices()
+
+    coins = []
+    for symbol, price in prices.items():
+        coins.append({
+            'ticker': symbol.lower(),
+            'price': price
+        })
+
     return render(request, 'index.html', {'coins': coins})
 
 def donate_view(request):
