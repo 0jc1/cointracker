@@ -10,20 +10,22 @@ def portfolio_view(request):
 	user = request.user
 	# Fetch all wallets associated with the logged-in user
 	user_wallets = Wallet.objects.filter(user=user)
-	# If you want to handle adding wallets with a POST directly on this page:
 	if request.method == 'POST':
 		form = WalletForm(request.POST)
+  
+		#validate wallet address
 		if form.is_valid():
 			new_wallet = form.save(commit=False)
 			new_wallet.user = user
 			new_wallet.save()
-			return redirect('portfolio')  # Reload the page to show the new wallet
+			return redirect('portfolio')  
 	else:
 		form = WalletForm()
 
 	context = {
 		'user_wallets': user_wallets,
 		'form': form,
+		'prices' : None
 	}
 	return render(request, 'portfolio.html', context)
 
