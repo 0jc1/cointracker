@@ -24,9 +24,9 @@
         <div class="text-block-5">24h Change</div>
         <div class="text-block-6">+$300</div>
       </div>
-    
+
       <div class="div-block-5">
-        <canvas id="canvas1" style="width: 100%" height="300" aria-label="Chart" ></canvas>
+        <canvas id="canvas1" style="width: 100%" height="300" aria-label="Chart"></canvas>
       </div>
 
       <div id="w-node-_307dbd9c-87c5-f83e-15fa-66756278fea8-dc1d944a" class="div-block-4">
@@ -53,6 +53,7 @@
         </table>
       </div>
       <div id="w-node-_386f551e-9e05-a3b4-cf62-c14c47e4c28a-dc1d944a" class="div-block-2-copy2 wallets-div">
+        <!-- Displaying the user's wallets -->
         <table class="table_component">
           <thead>
             <tr class="table_row table_head1">
@@ -63,40 +64,23 @@
             </tr>
           </thead>
           <tbody class="table_body">
+            {% for wallet in user_wallets %}
             <tr class="table_row">
-              <td class="table_cell1">Wallet 1</td>
-              <td class="table_cell1">$3263</td>
-              <td class="table_cell1">33%</td>
+              <td class="table_cell1">{{ wallet.address }}</td>
+              <!-- For value and allocation, you could add logic or placeholders -->
+              <td class="table_cell1">$0</td>
+              <td class="table_cell1">0%</td>
               <td class="table_cell1">
-                <a href="#" class="f-button-action w-button w-inline-block">
+                <a href="{% url 'remove_wallet' wallet.id %}" class="f-button-action w-button w-inline-block">
                   <div>Remove</div>
                 </a>
               </td>
             </tr>
-            <tr class="table_row">
-              <td class="table_cell1">Wallet 2</td>
-              <td class="table_cell1">$352</td>
-              <td class="table_cell1">33%</td>
-              <td class="table_cell1">
-                <a href="#" class=" w-inline-block f-button-action w-button">
-                  <div>Remove</div>
-                </a>
-              </td>
-            </tr>
-            <tr class="table_row">
-              <td class="table_cell1">Wallet 3</td>
-              <td class="table_cell1">$3532</td>
-              <td class="table_cell1">33%</td>
-              <td class="table_cell1">
-                <a href="#" class="f-button-action w-button w-inline-block">
-                  <div>Remove</div>
-                </a>
-              </td>
-            </tr>
+            {% endfor %}
           </tbody>
           <caption class="table_caption">Wallets</caption>
         </table>
-        <a href="#" class="f-button-apple w-inline-block" id ="openModalBtn">
+        <a href="#" class="f-button-apple w-inline-block" id="openModalBtn">
           <div>Add Wallet</div>
         </a>
       </div>

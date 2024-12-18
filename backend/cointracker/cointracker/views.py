@@ -21,11 +21,6 @@ def about_view(request):
 def login_view(request):
     return render(request, 'login.html')
 
-def portfolio_view(request):
-    if not request.user.is_authenticated:
-        return redirect('login')  
-    return render(request, 'portfolio.html')
-
 def settings_view(request):
     if not request.user.is_authenticated:
         return redirect('login')  

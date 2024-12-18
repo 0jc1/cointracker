@@ -85,7 +85,7 @@
   });
 </script>
 
-<!-- Modal Overlay (initially hidden) -->
+<!-- Modal Overlay -->
 <div id="modalOverlay" class="f-modal-overlay hide">
   <div class="f-modal-base">
     <div class="f-modal-content-wrapper">
@@ -94,19 +94,20 @@
       </div>
       <p class="f-paragraph-small">Add your BTC, ETH, LTC wallet to your portfolio.</p>
       <div class="f-modal-form-block-small w-form">
-        <form id="email-form" name="email-form" data-name="Email Form" method="get"
-          data-wf-page-id="675b599f19375f8581771684" data-wf-element-id="3466c469-79ca-2134-b091-02a42a01a44d">
+        <!-- Use Django form here -->
+        <form id="email-form" name="email-form" method="post" action="{% url 'portfolio' %}">
+          {% csrf_token %}
+          {{ form.non_field_errors }}
           <div class="f-field-wrapper-2">
             <div class="f-field-label-2">Wallet Address:</div>
-            <input class="f-field-input-2 w-input" maxlength="256" name="Modal-Field-E" data-name="Modal Field E"
-              placeholder="Placeholder" type="text" id="Modal-Field-E">
+            {{ form.address }} <!-- Renders the input with placeholder -->
           </div>
           <input type="submit" data-wait="Please wait..." class="f-button-primary w-button" value="Submit">
         </form>
-        <div class="f-success-message w-form-done">
+        <div class="f-success-message w-form-done" style="display:none;">
           <div>Thank you! Your submission has been received!</div>
         </div>
-        <div class="w-form-fail">
+        <div class="w-form-fail" style="display:none;">
           <div>Oops! Something went wrong while submitting the form.</div>
         </div>
       </div>
