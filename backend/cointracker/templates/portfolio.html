@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Portfolio{% endblock title %}
 
@@ -13,23 +14,30 @@
     {% if user.is_authenticated %}
     <p>Welcome, {{ user.username }}!</p>
     {% else %}
-
+    <p>Please log in to view your portfolio.</p>
     {% endif %}
     <div class="w-layout-grid grid">
-      <div id="w-node-_895ec835-6760-c57c-e5ce-4f72c6e9907f-dc1d944a" class="div-block-2-copy2">
+
+      <!-- Current Balance -->
+      <div class="div-block-2-copy2">
         <div class="text-block-5">Current Balance</div>
-        <div class="text-block-7">$1,234</div>
+        <div class="text-block-7">${{ total_balance|floatformat:2|intcomma }}</div>
       </div>
-      <div id="w-node-_6dd13574-8b27-f102-1203-d8ea927a9749-dc1d944a" class="div-block-4">
+
+      <!-- 24h Change -->
+      <div class="div-block-4">
         <div class="text-block-5">24h Change</div>
-        <div class="text-block-6">+$300</div>
+        <div class="text-block-6 {% if overall_change > 0 %}positive{% elif overall_change < 0 %}negative{% endif %}">
+          {% if overall_change > 0 %}+{% endif %}{{ overall_change }}%
+        </div>
       </div>
 
       <div class="div-block-5">
         <canvas id="canvas1" style="width: 100%" height="300" aria-label="Chart"></canvas>
       </div>
 
-      <div id="w-node-_307dbd9c-87c5-f83e-15fa-66756278fea8-dc1d944a" class="div-block-4">
+      <!-- Holdings Table -->
+      <div class="div-block-4">
         <table class="table_component">
           <caption class="table_caption">Holdings</caption>
           <thead>
@@ -42,22 +50,34 @@
             </tr>
           </thead>
           <tbody class="table_body">
+            {% for holding in holdings_data %}
             <tr class="table_row">
-              <td class="table_cell1">Ethereal</td>
-              <td class="table_cell1">24.43</td>
-              <td class="table_cell1">$72,234</td>
-              <td class="table_cell1">$4,000</td>
-              <td class="table_cell1">-1.00%</td>
+              <td class="table_cell1">{{ holding.currency }}</td>
+              <td class="table_cell1">{{ holding.amount }}</td>
+              <td class="table_cell1">${{ holding.value |floatformat:2|intcomma }}</td>
+              <td class="table_cell1">${{ holding.latest_price |floatformat:2|intcomma }}</td>
+              <td
+                class="table_cell1 {% if holding.change > 0 %}positive{% elif holding.change < 0 %}negative{% endif %}">
+                {% if holding.change > 0 %}+{% endif %}{{ holding.change }}%
+              </td>
             </tr>
+            {% empty %}
+            <tr class="table_row">
+              <td colspan="5" class="table_cell1">No holdings yet.</td>
+            </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
-      <div id="w-node-_386f551e-9e05-a3b4-cf62-c14c47e4c28a-dc1d944a" class="div-block-2-copy2 wallets-div">
+
+      <!-- Wallets Table -->
+      <div class="div-block-2-copy2 wallets-div">
         <!-- Displaying the user's wallets -->
         <table class="table_component">
           <thead>
             <tr class="table_row table_head1">
               <th class="table_header">Name</th>
+              <th class="table_header">Address</th>
               <th class="table_header">Value</th>
               <th class="table_header">Allocation</th>
               <th class="table_header">Action</th>
@@ -66,15 +86,29 @@
           <tbody class="table_body">
             {% for wallet in user_wallets %}
             <tr class="table_row">
-              <td class="table_cell1">{{ wallet.address }}</td>
-              <!-- For value and allocation, you could add logic or placeholders -->
-              <td class="table_cell1">$0</td>
-              <td class="table_cell1">0%</td>
+              <!-- Display the coin type with "Wallet" appended -->
+              <td class="table_cell1">{{ wallet.name }}</td>
+
+              <!-- Display the wallet address with overflow handling -->
+              <td class="table_cell1 address-cell" title="{{ wallet.address }}">
+                {{ wallet.address|slice:":6" }}...{{ wallet.address|slice:"-4:" }}
+              </td>
+
+              <!-- Display the wallet's total value -->
+              <td class="table_cell1">${{ wallet.value |floatformat:2|intcomma }}</td>
+
+              <!-- Display the wallet's allocation -->
+              <td class="table_cell1">{{ wallet.allocation }}%</td>
+
               <td class="table_cell1">
-                <a href="{% url 'remove_wallet' wallet.id %}" class="f-button-action w-button w-inline-block">
+                <a href="{% url 'remove_wallet' wallet.wallet.id %}" class="f-button-action w-button w-inline-block">
                   <div>Remove</div>
                 </a>
               </td>
+            </tr>
+            {% empty %}
+            <tr class="table_row">
+              <td colspan="5" class="table_cell1">No wallets added yet.</td>
             </tr>
             {% endfor %}
           </tbody>
@@ -84,10 +118,9 @@
           <div>Add Wallet</div>
         </a>
       </div>
+
     </div>
   </div>
-
-
 </section>
 
 {% include "modal.html" %}

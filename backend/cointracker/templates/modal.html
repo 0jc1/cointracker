@@ -92,18 +92,35 @@
       <div class="f-margin-bottom-29">
         <div class="f-sub-heading-regular">Add your cryptocurrency wallet</div>
       </div>
-      <p class="f-paragraph-small">Add your BTC, ETH, LTC wallet to your portfolio.</p>
+      <p class="f-paragraph-small">Add your BTC, ETH, SOL, LTC, or BNB wallet to your portfolio.</p>
       <div class="f-modal-form-block-small w-form">
         <!-- Use Django form here -->
         <form id="email-form" name="email-form" method="post" action="{% url 'portfolio' %}">
           {% csrf_token %}
           {{ form.non_field_errors }}
+          
+          <!-- Dropdown menu for coin type -->
+          <div class="f-field-wrapper-2">
+            <div class="f-field-label-2">Select Cryptocurrency:</div>
+            <select name="wallet_type" class="f-field" required>
+              <option value="">--Select--</option>
+              <option value="BTC">BTC</option>
+              <option value="ETH">ETH</option>
+              <option value="LTC">LTC</option>
+              <option value="SOL">SOL</option>
+              <option value="BNB">BNB</option>
+            </select>
+          </div>
+          
+          <!-- Wallet address field -->
           <div class="f-field-wrapper-2">
             <div class="f-field-label-2">Wallet Address:</div>
-            {{ form.address }} <!-- Renders the input with placeholder -->
+            {{ form.address }}
           </div>
+          
           <input type="submit" data-wait="Please wait..." class="f-button-primary w-button" value="Submit">
         </form>
+        
         <div class="f-success-message w-form-done" style="display:none;">
           <div>Thank you! Your submission has been received!</div>
         </div>

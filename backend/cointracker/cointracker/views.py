@@ -6,7 +6,6 @@ def my404_view(request, exception):
     return render(request, '404.html', {}, status=404)
 
 def index_view(request):
-    # Retrieve cached prices without blocking
     prices = get_cached_or_refresh_prices()
 
     coins = []
