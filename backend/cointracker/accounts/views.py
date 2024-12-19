@@ -9,7 +9,6 @@ def signup_view(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # Automatically log the user in after signup
             login(request, user)
             return redirect('portfolio')  # Redirect to a page that shows user is logged in
     else:
