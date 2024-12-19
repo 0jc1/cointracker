@@ -1,48 +1,90 @@
-document.addEventListener('DOMContentLoaded', () => {
+// portfolio.js
 
+document.addEventListener('DOMContentLoaded', () => {
     const ctx = document.getElementById('canvas1').getContext('2d');
 
-    // Example data: each label might represent a point in time
-    const data = {
-        labels: ["2024-12-10", "2024-12-11", "2024-12-12", "2024-12-13", "2024-12-14"],
-        datasets: [{
-            label: 'Price over Time',
-            data: [100, 200, 150, 300, 250], // Example USD values
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 2,
-            fill: false,
-            tension: 0.1
-        }]
-    };
+    fetch('/api/portfolio/balance/', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'), // If using CSRF tokens
+        },
+        credentials: 'include', // Include cookies for authentication
+    })
+        .then(response => response.json())
+        .then(data => {
+            const chartData = {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Portfolio Balance',
+                    data: data.data.map(value => parseFloat(value)),
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 0,
+                    backgroundColor: 'rgb(80, 169, 228)',
+                }]
+            };
 
-    const config = {
-        type: 'line',
-        data: data,
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Time'
+            const config = {
+                type: 'line',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
                     },
-                    // If using dates, consider using a time scale and a date adapter
-                    // type: 'time',
-                    // time: {
-                    //   unit: 'day'
-                    // }
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'USD value'
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
                     },
-                    beginAtZero: false
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            },
+                            type: 'time',
+                            time: {
+                                unit: 'day',
+                                displayFormats: {
+                                    day: 'MM-DD'
+                                }
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'USD'
+                            },
+                            beginAtZero: false
+                        }
+                    }
+                }
+            };
+
+            const myChart = new Chart(ctx, config);
+        })
+        .catch(error => {
+            console.error('Error fetching portfolio balance:', error);
+        });
+
+    // Helper function to get CSRF token (if needed)
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
                 }
             }
         }
-    };
-
-    const myChart = new Chart(ctx, config);
-
+        return cookieValue;
+    }
 });

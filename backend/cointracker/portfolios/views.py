@@ -1,10 +1,77 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Wallet, Holding
+from .models import Wallet, Holding, CryptoPrice
 from .forms import WalletForm
 from decimal import Decimal
 from services.crypto_price import get_crypto_price, get_latest_price, get_price_24h_ago
 from services.btc import get_address_balance
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from django.utils import timezone
+from django.db.models import Sum, F
+from datetime import timedelta, date
+from .serializers import PortfolioBalanceSerializer
+
+class PortfolioBalanceOverTimeView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        user = request.user
+        wallets = Wallet.objects.filter(user=user)
+        holdings = Holding.objects.filter(wallet__in=wallets)
+
+        end_date = timezone.now().date()
+        start_date = end_date - timedelta(days=20)
+
+        # Prepare a list of dates
+        date_list = [start_date + timedelta(days=x) for x in range((end_date - start_date).days + 1)]
+
+        # Initialize a dictionary to hold the balance per day
+        balance_over_time = {single_date: Decimal('0.00') for single_date in date_list}
+
+        for holding in holdings:
+            ticker = holding.ticker
+            amount = holding.amount
+
+            # Get all relevant CryptoPrice entries for the holding's ticker between start_date and end_date
+            prices = CryptoPrice.objects.filter(
+                ticker=ticker,
+                timestamp__date__gte=start_date,
+                timestamp__date__lte=end_date
+            ).order_by('timestamp')
+
+            # Create a date-wise price mapping (use the latest price up to that date)
+            price_mapping = {}
+            last_price = Decimal('0.00')
+            for single_date in date_list:
+                # Get the latest price up to and including this date
+                latest_price = prices.filter(timestamp__date__lte=single_date).order_by('-timestamp').first()
+                if latest_price:
+                    last_price = latest_price.price
+                price_mapping[single_date] = last_price
+
+            # Calculate the balance for each day and add to the total
+            for single_date in date_list:
+                daily_balance = amount * price_mapping[single_date]
+                balance_over_time[single_date] += daily_balance
+
+        # Prepare the response data
+        serialized_data = [
+            {
+                'date': single_date,
+                'balance': balance_over_time[single_date]
+            }
+            for single_date in date_list
+        ]
+
+        # Serialize the data
+        serializer = PortfolioBalanceSerializer(serialized_data, many=True)
+
+        return Response({
+            'labels': [item['date'].strftime('%Y-%m-%d') for item in serialized_data],
+            'data': [str(item['balance']) for item in serialized_data]
+        })
 
 def update_wallet_balances(user_wallets):
     for wallet in user_wallets:

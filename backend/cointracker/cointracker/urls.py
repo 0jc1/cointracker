@@ -19,7 +19,7 @@ from django.urls import path, include
 from django.conf.urls import handler404
 
 from accounts.views import signup_view, login_view, logout_view
-from portfolios.views import portfolio_view, remove_wallet_view
+from portfolios.views import portfolio_view, remove_wallet_view, PortfolioBalanceOverTimeView
 from .views import (
     donate_view, index_view,
     settings_view, transactions_view, about_view, my404_view
@@ -40,5 +40,7 @@ urlpatterns = [
     path('transactions/', transactions_view, name='transactions'),
     path('logout/', logout_view, name="logout"),
     path('remove-wallet/<int:wallet_id>/', remove_wallet_view, name='remove_wallet'),
+    path('api-auth/', include('rest_framework.urls')),  # For browsable API login
+    path('api/portfolio/balance/', PortfolioBalanceOverTimeView.as_view(), name='portfolio-balance-over-time'),
 
 ]
