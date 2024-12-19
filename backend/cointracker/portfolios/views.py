@@ -4,7 +4,7 @@ from .models import Wallet, Holding, CryptoPrice
 from .forms import WalletForm
 from decimal import Decimal
 from services.crypto_price import get_crypto_price, get_latest_price, get_price_24h_ago
-from services.btc import get_address_balance
+from services.balance import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -76,8 +76,9 @@ class PortfolioBalanceOverTimeView(APIView):
 def update_wallet_balances(user_wallets):
     for wallet in user_wallets:
         if wallet.wallet_type == 'BTC':
-            balance = get_address_balance(wallet.address)
-        # Handle other wallet types as needed
+            balance = get_address_balance_btc(wallet.address)
+        elif wallet.wallet_type == 'ETH':
+            balance = get_address_balance_eth(wallet.address)
         else:
             balance = Decimal('0.00')  # Unsupported type
 
