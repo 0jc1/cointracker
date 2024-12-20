@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.utils import timezone
-from django.db.models import Sum, F
+from django.db.models import Sum, F, Max
 from datetime import timedelta, date
 from .serializers import PortfolioBalanceSerializer
 
@@ -18,43 +18,48 @@ class PortfolioBalanceOverTimeView(APIView):
 
     def get(self, request, format=None):
         user = request.user
-        wallets = Wallet.objects.filter(user=user)
-        holdings = Holding.objects.filter(wallet__in=wallets)
 
+        # Define the time range (e.g., last 20 days)
         end_date = timezone.now().date()
         start_date = end_date - timedelta(days=20)
 
         # Prepare a list of dates
         date_list = [start_date + timedelta(days=x) for x in range((end_date - start_date).days + 1)]
 
-        # Initialize a dictionary to hold the balance per day
-        balance_over_time = {single_date: Decimal('0.00') for single_date in date_list}
+        # Fetch Portfolio objects for the user within the date range
+        # For each day, get the latest portfolio balance up to that day
+        portfolio_qs = Portfolio.objects.filter(
+            user=user,
+            timestamp__date__lte=end_date
+        ).order_by('timestamp')
 
-        for holding in holdings:
-            ticker = holding.ticker
-            amount = holding.amount
+        # Annotate each portfolio entry with its date
+        portfolio_entries = portfolio_qs.values('balance', 'timestamp__date').annotate(
+            latest_timestamp=Max('timestamp')
+        )
 
-            # Get all relevant CryptoPrice entries for the holding's ticker between start_date and end_date
-            prices = CryptoPrice.objects.filter(
-                ticker=ticker,
-                timestamp__date__gte=start_date,
-                timestamp__date__lte=end_date
-            ).order_by('timestamp')
+        # Create a mapping from date to the latest balance on or before that date
+        balance_over_time = {}
+        last_known_balance = Decimal('0.00')
 
-            # Create a date-wise price mapping (use the latest price up to that date)
-            price_mapping = {}
-            last_price = Decimal('0.00')
-            for single_date in date_list:
-                # Get the latest price up to and including this date
-                latest_price = prices.filter(timestamp__date__lte=single_date).order_by('-timestamp').first()
-                if latest_price:
-                    last_price = latest_price.price
-                price_mapping[single_date] = last_price
+        # Convert queryset to list of dictionaries for easier processing
+        portfolio_data = list(portfolio_entries)
 
-            # Calculate the balance for each day and add to the total
-            for single_date in date_list:
-                daily_balance = amount * price_mapping[single_date]
-                balance_over_time[single_date] += daily_balance
+        # Sort the portfolio data by date to ensure chronological order
+        portfolio_data.sort(key=lambda x: x['timestamp__date'])
+
+        # Create a dictionary to hold the latest balance up to each date
+        date_to_balance = {}
+        current_index = 0
+        total_entries = len(portfolio_data)
+
+        for single_date in date_list:
+            # Update the last known balance up to the current date
+            while (current_index < total_entries and 
+                   portfolio_data[current_index]['timestamp__date'] <= single_date):
+                last_known_balance = portfolio_data[current_index]['balance']
+                current_index += 1
+            balance_over_time[single_date] = last_known_balance
 
         # Prepare the response data
         serialized_data = [
@@ -64,9 +69,6 @@ class PortfolioBalanceOverTimeView(APIView):
             }
             for single_date in date_list
         ]
-
-        # Serialize the data
-        serializer = PortfolioBalanceSerializer(serialized_data, many=True)
 
         return Response({
             'labels': [item['date'].strftime('%Y-%m-%d') for item in serialized_data],
@@ -127,8 +129,6 @@ def portfolio_view(request):
     per_wallet_data = []
     total_balance = Decimal('0.00')
     total_change_weighted = Decimal('0.00')
-
-    # Aggregate holdings by ticker
     holdings_aggregate = {}
 
     for wallet in user_wallets:
@@ -183,7 +183,6 @@ def portfolio_view(request):
             'value': wallet_value,  # Total value across holdings in this wallet
             'allocation': allocation,
         })
-
 
     # Calculate overall 24h change
     if total_balance > Decimal('0.00'):
