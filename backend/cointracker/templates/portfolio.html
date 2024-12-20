@@ -52,7 +52,11 @@
           <tbody class="table_body">
             {% for holding in holdings_data %}
             <tr class="table_row">
-              <td class="table_cell1">{{ holding.currency }}</td>
+              <td class="table_cell1" style="text-align: left;">
+                <img src="{% static 'images/'|add:holding.ticker|add:'.png' %}" class="crypto-icon">
+
+                <span>{{ holding.currency }}</span>
+              </td>
               <td class="table_cell1">{{ holding.amount }}</td>
               <td class="table_cell1">${{ holding.value |floatformat:2|intcomma }}</td>
               <td class="table_cell1">${{ holding.latest_price |floatformat:2|intcomma }}</td>
