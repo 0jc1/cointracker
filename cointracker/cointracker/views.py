@@ -32,12 +32,8 @@ def settings_view(request):
         return redirect('login')  
     return render(request, 'settings.html')
 
-def signup_view(request):
-    return render(request, 'sign-up.html')
-
 def ranking_view(request):
     prices = get_cached_or_refresh_prices()
-
     coins = []
     for symbol, price in prices.items():
         coins.append({
