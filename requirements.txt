@@ -48,6 +48,6 @@ typing_extensions==4.12.2
 urllib3==2.2.3
 web3==7.6.0
 websockets==13.1
-wheel @ file:///opt/homebrew/Cellar/python%403.13/3.13.1/libexec/wheel-0.45.1-py3-none-any.whl#sha256=da46333d5dcbde6e20cf7e2f8fff9e9ce76e8c94dc4afd6fb95fc4bc2745fb5e
+wheel==0.45.1
 whitenoise==6.8.2
 yarl==1.18.3
