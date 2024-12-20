@@ -1,0 +1,1 @@
+web gunicorn cointracker.cointracker.wsgi:application --log-file -

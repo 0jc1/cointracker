@@ -9,7 +9,9 @@ certifi==2024.8.30
 charset-normalizer==3.4.0
 ckzg==2.0.1
 cytoolz==1.0.1
+dj-database-url==2.3.0
 Django==5.1.4
+django-heroku==0.3.1
 django-ranged-response==0.2.0
 django-simple-captcha==0.6.0
 djangorestframework==3.15.2
@@ -22,12 +24,15 @@ eth-typing==5.0.1
 eth-utils==5.1.0
 eth_abi==5.1.0
 frozenlist==1.5.0
+gunicorn==23.0.0
 hexbytes==1.2.1
 idna==3.10
 multidict==6.1.0
+packaging==24.2
 parsimonious==0.10.0
 pillow==11.0.0
 propcache==0.2.1
+psycopg2==2.9.10
 pycryptodome==3.21.0
 pydantic==2.10.3
 pydantic_core==2.27.1
@@ -44,4 +49,5 @@ urllib3==2.2.3
 web3==7.6.0
 websockets==13.1
 wheel @ file:///opt/homebrew/Cellar/python%403.13/3.13.1/libexec/wheel-0.45.1-py3-none-any.whl#sha256=da46333d5dcbde6e20cf7e2f8fff9e9ce76e8c94dc4afd6fb95fc4bc2745fb5e
+whitenoise==6.8.2
 yarl==1.18.3
