@@ -3,6 +3,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const ctx = document.getElementById('canvas1').getContext('2d');
 
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgb(64, 174, 248)'); // Top color (semi-transparent)
+    gradient.addColorStop(1, 'rgba(215, 226, 233, 0.15)');   // Bottom color (transparent)
+
     fetch('/api/portfolio/balance/', {
         method: 'GET',
         headers: {
@@ -13,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
         .then(response => response.json())
         .then(data => {
+
             const chartData = {
                 labels: data.labels,
                 datasets: [{
@@ -23,20 +28,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     fill: true,
                     tension: 0.3,
                     pointRadius: 0,
-                    backgroundColor: 'rgb(80, 169, 228)',
+                    backgroundColor: gradient,
                 }]
             };
+
 
             const config = {
                 type: 'line',
                 data: chartData,
                 options: {
                     responsive: true,
-                    tooltips: {
-                        mode: 'index',
-                        intersect: false,
+                    plugins: {
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        },
                     },
-                    hover: {
+                    interaction: {
                         mode: 'nearest',
                         intersect: true
                     },
@@ -52,6 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
                                 displayFormats: {
                                     day: 'MM-DD'
                                 }
+                            },
+                            grid: {
+                                display: false // Optional: Hide x-axis grid lines
                             }
                         },
                         y: {
@@ -59,9 +70,18 @@ document.addEventListener('DOMContentLoaded', () => {
                                 display: true,
                                 text: 'USD'
                             },
-                            beginAtZero: false
+                            beginAtZero: false,
+                            grid: {
+                                color: 'rgba(127, 127, 127, 0.2)' // Light grid lines
+                            }
                         }
-                    }
+                    },
+                    elements: {
+                        line: {
+                            borderWidth: 2,
+                        },
+                    },
+                    maintainAspectRatio: false, // Allows the chart to resize properly
                 }
             };
 
