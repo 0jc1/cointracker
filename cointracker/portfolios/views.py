@@ -133,7 +133,6 @@ def portfolio_view(request):
     wallet_values = {}
     prices_cache = {}  # To store latest_price and price_24h_ago per ticker
 
-
     for wallet in user_wallets:
         wallet_value = Decimal('0.00')
         for holding in wallet.holdings.all():
@@ -175,7 +174,6 @@ def portfolio_view(request):
             total_change_weighted += value * change
             wallet_value += value
             wallet_values[wallet.address] = wallet_value
-
 
     for ticker in holdings_aggregate:
         h = holdings_aggregate[ticker]
