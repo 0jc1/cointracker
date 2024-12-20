@@ -1,22 +1,57 @@
-name: Pylint
+name: Lint and Format Python
 
-on: [push]
+# Trigger the workflow on push and pull request events to the main branch
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  build:
+  lint-and-format:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.8", "3.9", "3.10"]
+
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+    # Step 1: Checkout the repository
+    - name: Checkout Repository
+      uses: actions/checkout@v3
       with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
+        # Fetch all history for all branches and tags
+        fetch-depth: 0
+
+    # Step 2: Set up Python environment
+    - name: Set Up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'  # Specify your Python version here
+
+    # Step 3: Install dependencies
+    - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pylint
-    - name: pylint-and-format    
-      uses: itsvinayak/pylint-and-format@v1.1
+        pip install flake8 black
+
+    # Step 4: Lint the code using flake8
+    - name: Lint with flake8
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    # Step 5: Check formatting with black
+    - name: Check Formatting with Black
+      run: |
+        black . --check
+
+    # Step 6: Automatically format code with black and commit changes if formatting issues are found
+    - name: Format Code with Black
+      if: failure()  # This step runs only if the previous step failed (i.e., formatting issues exist)
+      run: |
+        black .
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add .
+        git commit -m "✨ Auto-format code with black"
+        git push
+      env:
+        # GitHub automatically provides GITHUB_TOKEN to authenticate
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
