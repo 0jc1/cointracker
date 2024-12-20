@@ -28,6 +28,12 @@
           <input class="f-field-input w-input" maxlength="256" name="password2" data-name="password2" placeholder=""
             type="password" id="password2" required>
         </div>
+        <div class="div-block">
+        <div class="f-field-wrapper-copy">
+
+          {{ form.captcha }}
+        </div>
+        </div>
         <input type="submit" data-wait="Please wait..." class="submit-button w-button" value="Submit">
         <div class="text-block-4">Already have an account? <a href="{% url 'login' %}">Login.</a>
         </div>

@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'rest_framework',
+    'captcha',  # Add this line
     'accounts',
-    'portfolios'
+    'portfolios',
+    
 ]
 
 MIDDLEWARE = [

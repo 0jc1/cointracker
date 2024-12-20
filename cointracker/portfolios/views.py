@@ -109,7 +109,6 @@ def create_portfolio_object(usr, bal, minutes=5):
     if not recent_portfolios.exists():
         Portfolio.objects.create(user=usr, balance=bal)
        
-
 @login_required(login_url='/login/')
 def portfolio_view(request):
     user = request.user

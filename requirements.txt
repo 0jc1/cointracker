@@ -10,6 +10,8 @@ charset-normalizer==3.4.0
 ckzg==2.0.1
 cytoolz==1.0.1
 Django==5.1.4
+django-ranged-response==0.2.0
+django-simple-captcha==0.6.0
 djangorestframework==3.15.2
 eth-account==0.13.4
 eth-hash==0.7.0
@@ -24,6 +26,7 @@ hexbytes==1.2.1
 idna==3.10
 multidict==6.1.0
 parsimonious==0.10.0
+pillow==11.0.0
 propcache==0.2.1
 pycryptodome==3.21.0
 pydantic==2.10.3
@@ -40,5 +43,5 @@ typing_extensions==4.12.2
 urllib3==2.2.3
 web3==7.6.0
 websockets==13.1
+wheel @ file:///opt/homebrew/Cellar/python%403.13/3.13.1/libexec/wheel-0.45.1-py3-none-any.whl#sha256=da46333d5dcbde6e20cf7e2f8fff9e9ce76e8c94dc4afd6fb95fc4bc2745fb5e
 yarl==1.18.3
-

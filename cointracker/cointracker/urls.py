@@ -38,6 +38,7 @@ urlpatterns = [
     path('portfolio/', portfolio_view, name='portfolio'),
     path('settings/', settings_view, name='settings'),
     path('sign-up/', signup_view, name='sign-up'),
+    path('captcha/', include('captcha.urls')),
     path('transactions/', transactions_view, name='transactions'),
     path('logout/', logout_view, name="logout"),
     path('remove-wallet/<int:wallet_id>/', remove_wallet_view, name='remove_wallet'),
