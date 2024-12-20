@@ -99,11 +99,16 @@ def update_wallet_balances(user_wallets):
                 holding.amount = balance
                 holding.save()
                 
-def create_portfolio_object(usr, bal):
-    Portfolio.objects.create(
-        user = usr,
-        balance = bal
-    )     
+def create_portfolio_object(usr, bal, minutes=5):
+    now = timezone.now()
+    time_threshold = now - timedelta(minutes=minutes)
+    
+    recent_portfolios = Portfolio.objects.filter(
+        user=usr,
+        timestamp__gte=time_threshold)
+    if not recent_portfolios.exists():
+        Portfolio.objects.create(user=usr, balance=bal)
+       
 
 @login_required(login_url='/login/')
 def portfolio_view(request):
