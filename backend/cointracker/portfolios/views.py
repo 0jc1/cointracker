@@ -105,13 +105,10 @@ def create_portfolio_object(usr, bal):
         balance = bal
     )     
 
+@login_required(login_url='/login/')
 def portfolio_view(request):
     user = request.user
-    
-    if not user.is_authenticated:
-        redirect('login')
-    
-    user_wallets = Wallet.objects.filter(user=user)
+    user_wallets = Wallet.objects.filter(user=user).prefetch_related('holdings')
 
     if request.method == 'POST':
         form = WalletForm(request.POST)
