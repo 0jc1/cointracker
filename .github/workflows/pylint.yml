@@ -1,9 +1,3 @@
-              
-- name: PyLint with dynamic badge
-
-
-              
-  uses: Silleellie/pylint-github-action@v2
- with:
-    lint-path: /  # lint src package
-    python-version: 3.13.1  # python version which will lint the package
+- name: pylint-and-format
+  uses: itsvinayak/pylint-and-format@v1.1
+            
