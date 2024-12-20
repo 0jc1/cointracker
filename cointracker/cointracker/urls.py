@@ -14,35 +14,48 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import handler404
 
 from accounts.views import signup_view, login_view, logout_view
-from portfolios.views import portfolio_view, remove_wallet_view, PortfolioBalanceOverTimeView
+from portfolios.views import (
+    portfolio_view,
+    remove_wallet_view,
+    PortfolioBalanceOverTimeView,
+)
 from .views import (
-    donate_view, index_view,
-    settings_view, transactions_view, about_view, my404_view, ranking_view
+    donate_view,
+    index_view,
+    settings_view,
+    transactions_view,
+    about_view,
+    my404_view,
+    ranking_view,
 )
 
 handler404 = my404_view
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', index_view, name='index'),
-    path('home/', index_view, name='index'),
-    path('donate/', donate_view, name='donate'),
-    path('about/', about_view, name='about'),
-    path('login/', login_view, name='login'),
-    path('ranking', ranking_view, name='ranking'),
-    path('portfolio/', portfolio_view, name='portfolio'),
-    path('settings/', settings_view, name='settings'),
-    path('sign-up/', signup_view, name='sign-up'),
-    path('captcha/', include('captcha.urls')),
-    path('transactions/', transactions_view, name='transactions'),
-    path('logout/', logout_view, name="logout"),
-    path('remove-wallet/<int:wallet_id>/', remove_wallet_view, name='remove_wallet'),
-    path('api-auth/', include('rest_framework.urls')),  # For browsable API login
-    path('api/portfolio/balance/', PortfolioBalanceOverTimeView.as_view(), name='portfolio-balance-over-time'),
-
+    path("admin/", admin.site.urls),
+    path("", index_view, name="index"),
+    path("home/", index_view, name="index"),
+    path("donate/", donate_view, name="donate"),
+    path("about/", about_view, name="about"),
+    path("login/", login_view, name="login"),
+    path("ranking", ranking_view, name="ranking"),
+    path("portfolio/", portfolio_view, name="portfolio"),
+    path("settings/", settings_view, name="settings"),
+    path("sign-up/", signup_view, name="sign-up"),
+    path("captcha/", include("captcha.urls")),
+    path("transactions/", transactions_view, name="transactions"),
+    path("logout/", logout_view, name="logout"),
+    path("remove-wallet/<int:wallet_id>/", remove_wallet_view, name="remove_wallet"),
+    path("api-auth/", include("rest_framework.urls")),  # For browsable API login
+    path(
+        "api/portfolio/balance/",
+        PortfolioBalanceOverTimeView.as_view(),
+        name="portfolio-balance-over-time",
+    ),
 ]

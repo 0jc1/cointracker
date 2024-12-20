@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import Wallet, Holding
 
+
 @receiver(post_save, sender=Wallet)
 def create_holding_for_wallet(sender, instance, created, **kwargs):
     if created:
@@ -16,5 +17,5 @@ def create_holding_for_wallet(sender, instance, created, **kwargs):
             wallet=instance,
             currency=instance.get_wallet_type_display(),
             ticker=instance.wallet_type,
-            amount=initial_amount
+            amount=initial_amount,
         )
