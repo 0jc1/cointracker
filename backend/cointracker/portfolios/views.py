@@ -19,7 +19,6 @@ class PortfolioBalanceOverTimeView(APIView):
     def get(self, request, format=None):
         user = request.user
 
-        # Define the time range (e.g., last 20 days)
         end_date = timezone.now().date()
         start_date = end_date - timedelta(days=20)
 
@@ -55,8 +54,7 @@ class PortfolioBalanceOverTimeView(APIView):
 
         for single_date in date_list:
             # Update the last known balance up to the current date
-            while (current_index < total_entries and 
-                   portfolio_data[current_index]['timestamp__date'] <= single_date):
+            while (current_index < total_entries and portfolio_data[current_index]['timestamp__date'] <= single_date):
                 last_known_balance = portfolio_data[current_index]['balance']
                 current_index += 1
             balance_over_time[single_date] = last_known_balance
@@ -130,6 +128,7 @@ def portfolio_view(request):
     total_balance = Decimal('0.00')
     total_change_weighted = Decimal('0.00')
     holdings_aggregate = {}
+    wallet_values = {}
 
     for wallet in user_wallets:
         wallet_value = Decimal('0.00')
@@ -169,13 +168,17 @@ def portfolio_view(request):
             total_balance += value
             total_change_weighted += value * change
             wallet_value += value
+            wallet_values[wallet.address] = wallet_value
 
+
+    for wallet in user_wallets:
+        wallet_value = wallet_values[wallet.address]
         # Calculate allocation per wallet
         if total_balance > Decimal('0.00'):
             allocation = (wallet_value / total_balance * Decimal('100')).quantize(Decimal('0.01'))
         else:
             allocation = Decimal('0.00')
-
+        
         per_wallet_data.append({
             'wallet': wallet,
             'name': f"{wallet.get_wallet_type_display()} Wallet",

@@ -75,12 +75,24 @@ def get_latest_price(ticker):
         return latest_price.price
     return Decimal('0.00')
 
+
 def get_price_24h_ago(ticker):
     time_24h_ago = timezone.now() - timezone.timedelta(hours=24)
-    price_24h_ago = CryptoPrice.objects.filter(ticker=ticker, timestamp__lte=time_24h_ago).order_by('-timestamp').first()
+    price_24h_ago = CryptoPrice.objects.filter(
+        ticker__iexact=ticker, 
+        timestamp__lte=time_24h_ago
+    ).order_by('-timestamp').first()
+    
     if price_24h_ago:
         return price_24h_ago.price
-    return Decimal('0.00')
+    else:
+        oldest_price = CryptoPrice.objects.filter(
+            ticker__iexact=ticker
+        ).order_by('timestamp').first()
+        if oldest_price:
+            return oldest_price.price
+        else:
+            return Decimal('0.00')
     
 def get_crypto_prices():
     prices = {}
