@@ -37,6 +37,19 @@ class Holding(models.Model):
         if latest_price:
             return self.amount * latest_price.price
         return Decimal('0.00')
+    
+class Portfolio(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    balance = models.DecimalField(max_digits=20, decimal_places=2, default=Decimal('0.00'))
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['user','timestamp']),
+        ]
+        
+    def __str__(self):
+        return f"{self.user.username} Portfolio - {self.balance} at {self.timestamp}"
 
 class CryptoPrice(models.Model):
     ticker = models.CharField(max_length=50) 

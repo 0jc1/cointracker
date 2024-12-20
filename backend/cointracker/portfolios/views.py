@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Wallet, Holding, CryptoPrice
+from .models import Wallet, Holding, CryptoPrice, Portfolio
 from .forms import WalletForm
 from decimal import Decimal
 from services.crypto_price import get_crypto_price, get_latest_price, get_price_24h_ago
@@ -98,9 +98,19 @@ def update_wallet_balances(user_wallets):
             if not created:
                 holding.amount = balance
                 holding.save()
+                
+def create_portfolio_object(usr, bal):
+    Portfolio.objects.create(
+        user = usr,
+        balance = bal
+    )     
 
 def portfolio_view(request):
     user = request.user
+    
+    if not user.is_authenticated:
+        redirect('login')
+    
     user_wallets = Wallet.objects.filter(user=user)
 
     if request.method == 'POST':
@@ -123,9 +133,17 @@ def portfolio_view(request):
 
     # Aggregate holdings by ticker
     holdings_aggregate = {}
+
     for wallet in user_wallets:
+        wallet_value = Decimal('0.00')
         for holding in wallet.holdings.all():
             ticker = holding.ticker.upper()
+            amount = holding.amount
+            
+            # Fetch the latest price from CryptoPrice model
+            latest_price = get_latest_price(ticker)
+            price_24h_ago = get_price_24h_ago(ticker)
+            
             if ticker not in holdings_aggregate:
                 holdings_aggregate[ticker] = {
                     'currency': holding.currency,
@@ -134,51 +152,25 @@ def portfolio_view(request):
                 }
             else:
                 holdings_aggregate[ticker]['amount'] += holding.amount
-
-    # Gather aggregated holdings data
-    for ticker, data in holdings_aggregate.items():
-        amount = data['amount']
-
-        # Fetch the latest price from CryptoPrice model
-        latest_price = get_latest_price(ticker)
-        price_24h_ago = get_price_24h_ago(ticker)
-
-        if price_24h_ago and price_24h_ago != Decimal('0.00'):
-            change = ((latest_price - price_24h_ago) / price_24h_ago * Decimal('100')).quantize(Decimal('0.01'))
-        else:
-            change = Decimal('0.00')
-
-        value = (amount * latest_price).quantize(Decimal('0.01'))
-
-        holdings_data.append({
-            'currency': data['currency'],
-            'ticker': ticker,
-            'amount': amount,
-            'latest_price': latest_price.quantize(Decimal('0.01')),
-            'value': value,
-            'change': change,
-        })
-
-        total_balance += value
-        total_change_weighted += value * change
-
-    # If you still need per_wallet_data (optional)
-    for wallet in user_wallets:
-        wallet_value = Decimal('0.00')
-        for holding in wallet.holdings.all():
-            ticker = holding.ticker.upper()
-            amount = holding.amount
-
-            # Fetch the latest price from CryptoPrice model
-            latest_price = get_latest_price(ticker)
-            price_24h_ago = get_price_24h_ago(ticker)
-
+                
             if price_24h_ago and price_24h_ago != Decimal('0.00'):
                 change = ((latest_price - price_24h_ago) / price_24h_ago * Decimal('100')).quantize(Decimal('0.01'))
             else:
                 change = Decimal('0.00')
 
             value = (amount * latest_price).quantize(Decimal('0.01'))
+
+            holdings_data.append({
+                'currency': holdings_aggregate[ticker]['currency'],
+                'ticker': ticker,
+                'amount': amount,
+                'latest_price': latest_price.quantize(Decimal('0.01')),
+                'value': value,
+                'change': change,
+            })
+
+            total_balance += value
+            total_change_weighted += value * change
             wallet_value += value
 
         # Calculate allocation per wallet
@@ -195,14 +187,18 @@ def portfolio_view(request):
             'allocation': allocation,
         })
 
+
     # Calculate overall 24h change
     if total_balance > Decimal('0.00'):
         overall_change = (total_change_weighted / total_balance).quantize(Decimal('0.01'))
     else:
         overall_change = Decimal('0.00')
         
+    # Sort in descending order
     holdings_data.sort(key=lambda x: x['value'], reverse=True)
     per_wallet_data.sort(key=lambda x: x['value'], reverse=True)
+    
+    create_portfolio_object(user, total_balance.quantize(Decimal('0.01')))
 
     context = {
         'user_wallets': per_wallet_data,
