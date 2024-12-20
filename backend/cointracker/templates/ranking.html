@@ -1,0 +1,63 @@
+<!-- ranking.html -->
+
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Ranking{% endblock title %}
+
+{% block content %}
+{% include "navbar.html" %}
+
+<section>
+  <div class="w-layout-blockcontainer w-container">
+    <div class="text-block-8">
+      <p>
+        Ranking of cryptocurrencies by market capitalization
+      </p>
+    </div>
+    <table class="table_component" style="font-size: 15px;">
+      <thead class="table_head">
+        <tr class="table_row">
+          <th class="table_header">#</th>
+          <th class="table_header">Name</th>
+          <th class="table_header">Price (USD)</th>
+          <th class="table_header">24h%</th>
+        </tr>
+      </thead>
+      <tbody class="table_body">
+        {% for coin in coins %}
+        <tr class="table_row">
+          <td class="table_cell"></td>
+          <td class="table_cell">
+
+            <p>
+              <img src="{% static 'images/'|add:coin.ticker|add:'.png' %}" alt="{{ coin.ticker }} icon"
+                class="crypto-icon">{{ coin.ticker}}
+            </p>
+          </td>
+          <td class="table_cell">${{ coin.price|floatformat:2|intcomma }}</td>
+          <td class="table_cell">
+            <!--
+              {% if coin.change_24h > 0 %}
+                <span class="positive-change">{{ coin.change_24h }}%</span>
+              {% elif coin.change_24h < 0 %}
+                <span class="negative-change">{{ coin.change_24h }}%</span>
+              {% else %}
+                <span class="no-change">{{ coin.change_24h }}%</span>
+              {% endif %}
+              -->
+          </td>
+        </tr>
+        {% empty %}
+        <tr class="table_row">
+          <td class="table_cell" colspan="4">No data available.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% include "footer.html" %}
+
+{% endblock content %}

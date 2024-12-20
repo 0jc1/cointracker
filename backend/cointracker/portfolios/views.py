@@ -25,8 +25,7 @@ class PortfolioBalanceOverTimeView(APIView):
         # Prepare a list of dates
         date_list = [start_date + timedelta(days=x) for x in range((end_date - start_date).days + 1)]
 
-        # Fetch Portfolio objects for the user within the date range
-        # For each day, get the latest portfolio balance up to that day
+        # Fetch Portfolio objects for the user within the date range. For each day, get the latest portfolio balance up to that day
         portfolio_qs = Portfolio.objects.filter(
             user=user,
             timestamp__date__lte=end_date
@@ -81,6 +80,7 @@ def update_wallet_balances(user_wallets):
             balance = get_address_balance_eth(wallet.address)
         else:
             balance = Decimal('0.00')  # Unsupported type
+        # TODO wallet support
 
         if balance is not None:
             #wallet.value = balance

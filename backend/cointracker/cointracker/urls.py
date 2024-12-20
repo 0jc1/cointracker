@@ -22,7 +22,7 @@ from accounts.views import signup_view, login_view, logout_view
 from portfolios.views import portfolio_view, remove_wallet_view, PortfolioBalanceOverTimeView
 from .views import (
     donate_view, index_view,
-    settings_view, transactions_view, about_view, my404_view
+    settings_view, transactions_view, about_view, my404_view, ranking_view
 )
 
 handler404 = my404_view
@@ -34,6 +34,7 @@ urlpatterns = [
     path('donate/', donate_view, name='donate'),
     path('about/', about_view, name='about'),
     path('login/', login_view, name='login'),
+    path('ranking', ranking_view, name='ranking'),
     path('portfolio/', portfolio_view, name='portfolio'),
     path('settings/', settings_view, name='settings'),
     path('sign-up/', signup_view, name='sign-up'),

@@ -10,10 +10,11 @@ def index_view(request):
 
     coins = []
     for symbol, price in prices.items():
-        coins.append({
-            'ticker': symbol.lower(),
-            'price': price
-        })
+        if symbol.lower() == 'btc':
+            coins.append({  
+                'ticker': symbol.lower(),
+                'price': price
+            })
 
     return render(request, 'index.html', {'coins': coins})
 
@@ -33,6 +34,18 @@ def settings_view(request):
 
 def signup_view(request):
     return render(request, 'sign-up.html')
+
+def ranking_view(request):
+    prices = get_cached_or_refresh_prices()
+
+    coins = []
+    for symbol, price in prices.items():
+        coins.append({
+            'ticker': symbol.lower(),
+            'price': price
+        })
+    
+    return render(request, 'ranking.html', {'coins': coins})
 
 def transactions_view(request):
     if not request.user.is_authenticated:
