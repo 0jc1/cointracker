@@ -85,8 +85,6 @@ def update_wallet_balances(user_wallets):
         if balance is not None:
             #wallet.value = balance
             #wallet.save()
-
-            # Update or create the corresponding Holding
             holding, created = Holding.objects.get_or_create(
                 wallet=wallet,
                 defaults={
@@ -133,6 +131,8 @@ def portfolio_view(request):
     total_change_weighted = Decimal('0.00')
     holdings_aggregate = {}
     wallet_values = {}
+    prices_cache = {}  # To store latest_price and price_24h_ago per ticker
+
 
     for wallet in user_wallets:
         wallet_value = Decimal('0.00')
@@ -140,18 +140,16 @@ def portfolio_view(request):
             ticker = holding.ticker.upper()
             amount = holding.amount
             
-            # Fetch the latest price from CryptoPrice model
-            latest_price = get_latest_price(ticker)
-            price_24h_ago = get_price_24h_ago(ticker)
-            
-            if ticker not in holdings_aggregate:
-                holdings_aggregate[ticker] = {
-                    'currency': holding.currency,
-                    'ticker': ticker,
-                    'amount': holding.amount,
+            if ticker not in prices_cache:
+                latest_price = get_latest_price(ticker)
+                price_24h_ago = get_price_24h_ago(ticker)
+                prices_cache[ticker] = {
+                    'latest_price': latest_price,
+                    'price_24h_ago': price_24h_ago
                 }
             else:
-                holdings_aggregate[ticker]['amount'] += holding.amount
+                latest_price = prices_cache[ticker]['latest_price']
+                price_24h_ago = prices_cache[ticker]['price_24h_ago']
                 
             if price_24h_ago and price_24h_ago != Decimal('0.00'):
                 change = ((latest_price - price_24h_ago) / price_24h_ago * Decimal('100')).quantize(Decimal('0.01'))
@@ -159,21 +157,36 @@ def portfolio_view(request):
                 change = Decimal('0.00')
 
             value = (amount * latest_price).quantize(Decimal('0.01'))
-
-            holdings_data.append({
-                'currency': holdings_aggregate[ticker]['currency'],
-                'ticker': ticker,
-                'amount': amount,
-                'latest_price': latest_price.quantize(Decimal('0.01')),
-                'value': value,
-                'change': change,
-            })
+            
+            if ticker not in holdings_aggregate:
+                holdings_aggregate[ticker] = {
+                    'currency': holding.currency,
+                    'ticker': ticker,
+                    'amount': holding.amount,
+                    'latest_price': latest_price,
+                    'value': value,
+                    'change': change
+                }
+            else:
+                holdings_aggregate[ticker]['value'] += value
+                holdings_aggregate[ticker]['amount'] += holding.amount
 
             total_balance += value
             total_change_weighted += value * change
             wallet_value += value
             wallet_values[wallet.address] = wallet_value
 
+
+    for ticker in holdings_aggregate:
+        h = holdings_aggregate[ticker]
+        holdings_data.append({
+            'currency': h['currency'],
+            'ticker': h['ticker'],
+            'amount': h['amount'],
+            'latest_price': h['latest_price'],
+            'value': h['value'],
+            'change': h['change'],
+        })
 
     for wallet in user_wallets:
         wallet_value = wallet_values[wallet.address]
