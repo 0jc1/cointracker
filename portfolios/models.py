@@ -18,10 +18,12 @@ class Wallet(models.Model):
     value = models.DecimalField(
         max_digits=20, decimal_places=2, default=Decimal("0.00")
     )
-    
+
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['user', 'address'], name='unique_user_address')
+            models.UniqueConstraint(
+                fields=["user", "address"], name="unique_user_address"
+            )
         ]
 
     def __str__(self):
