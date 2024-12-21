@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     })
         .then(response => response.json())
         .then(data => {
-
             const chartData = {
                 labels: data.labels,
                 datasets: [{

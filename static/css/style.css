@@ -20,7 +20,7 @@
   transition: all 0.3s;
 }
 
-.hide {
+.hide1 {
   display: none;
 }
 
@@ -28,6 +28,11 @@
 .table_row {
   border-bottom: 1px solid #b9b9b9;
   /* Light gray horizontal line */
+}
+
+.dropdown {
+  padding: 6px;
+  font-size: 20px;
 }
 
 .crypto-list {

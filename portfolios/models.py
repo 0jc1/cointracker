@@ -13,11 +13,16 @@ class Wallet(models.Model):
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    address = models.CharField(max_length=255, unique=True)
+    address = models.CharField(max_length=255)
     wallet_type = models.CharField(max_length=10, choices=COIN_CHOICES)
     value = models.DecimalField(
         max_digits=20, decimal_places=2, default=Decimal("0.00")
     )
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'address'], name='unique_user_address')
+        ]
 
     def __str__(self):
         return f"{self.get_wallet_type_display()} Wallet for {self.user.username}"

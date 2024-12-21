@@ -68,7 +68,6 @@
     // Show the modal
     openModalBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      console.log('ok')
       modalOverlay.classList.add('is-active');
     });
 
@@ -88,7 +87,7 @@
 </script>
 
 <!-- Modal Overlay -->
-<div id="modalOverlay" class="f-modal-overlay hide">
+<div id="modalOverlay" class="f-modal-overlay hide1">
   <div class="f-modal-base">
     <div class="f-modal-content-wrapper">
       <div class="f-margin-bottom-29">
@@ -104,7 +103,7 @@
           <!-- Dropdown menu for coin type -->
           <div class="f-field-wrapper-2">
             <div class="f-field-label-2">Select Cryptocurrency:</div>
-            <select name="wallet_type" class="f-field" required>
+            <select name="wallet_type" class="f-field selectpicker" required>
               <option value="">--Select--</option>
               <option value="BTC">BTC</option>
               <option value="ETH">ETH</option>
@@ -116,8 +115,9 @@
           
           <!-- Wallet address field -->
           <div class="f-field-wrapper-2">
-            <div class="f-field-label-2">Wallet Address:</div>
-            {{ form.address }}
+            <div class="f-field-label-2 ">Wallet Address:</div>
+              <input class="f-field-input w-input" maxlength="256" name="address" data-name="address" placeholder=""
+              type="text" id="address" required>
           </div>
           
           <input type="submit" data-wait="Please wait..." class="f-button-primary w-button" value="Submit">
