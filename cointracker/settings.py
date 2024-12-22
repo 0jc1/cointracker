@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     "rest_framework",
-    "captcha",  # Add this line
+    "captcha", 
     "accounts",
     "portfolios",
 ]
