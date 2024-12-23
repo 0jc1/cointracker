@@ -30,6 +30,10 @@
   /* Light gray horizontal line */
 }
 
+.grid {
+  grid-row-gap: 12px !important;
+}
+
 .dropdown {
   padding: 6px;
   font-size: 20px;

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .models import Wallet, Holding, CryptoPrice, Portfolio
 from .forms import WalletForm
 from decimal import Decimal
@@ -106,7 +107,7 @@ def update_wallet_balances(user_wallets):
                 holding.save()
 
 
-def create_portfolio_object(usr, bal, minutes=5):
+def create_portfolio_object(usr, bal, minutes=2):
     now = timezone.now()
     time_threshold = now - timedelta(minutes=minutes)
 
@@ -125,10 +126,14 @@ def portfolio_view(request):
     if request.method == "POST":
         form = WalletForm(request.POST)
         if form.is_valid():
-            new_wallet = form.save(commit=False)
-            new_wallet.user = user
-            new_wallet.save()
-            return redirect("portfolio")
+            if user_wallets.count() >= 10:
+                messages.error(request, "You have reached the maximum number of 10 wallets.")
+                return redirect("portfolio")
+            else:
+                new_wallet = form.save(commit=False)
+                new_wallet.user = user
+                new_wallet.save()
+                return redirect("portfolio")
     else:
         form = WalletForm()
 
