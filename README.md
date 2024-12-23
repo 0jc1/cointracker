@@ -1,6 +1,6 @@
 # Cointracker
 
-[Cointracker](http://www.cointracker.lol) is a free cryptocurrency portfolio tracker built in the Django framework.
+https://cointracker.lol is a free cryptocurrency portfolio tracker built in the Django framework.
 
 ## Installation
 
