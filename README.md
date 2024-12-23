@@ -9,11 +9,8 @@ cd cointracker
 ```
 
 Create and enter the virtual environment.
-
-
 ```bash
-python3 -m venv env
-
+python3 -m venv ./env
 . env/bin/activate
 ```
 
