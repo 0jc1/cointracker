@@ -14,6 +14,11 @@ python3 -m venv ./env
 . env/bin/activate
 ```
 
+Install required python packages.
+```bash
+pip install -r requirements.txt
+```
+
 Run the server. 
 ```bash
 python3 manage.py runserver
