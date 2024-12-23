@@ -127,7 +127,9 @@ def portfolio_view(request):
         form = WalletForm(request.POST)
         if form.is_valid():
             if user_wallets.count() >= 10:
-                messages.error(request, "You have reached the maximum number of 10 wallets.")
+                messages.error(
+                    request, "You have reached the maximum number of 10 wallets."
+                )
                 return redirect("portfolio")
             else:
                 new_wallet = form.save(commit=False)
