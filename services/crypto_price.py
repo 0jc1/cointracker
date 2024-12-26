@@ -11,7 +11,7 @@ from decimal import Decimal
 
 load_dotenv()
 
-ENDPOINT = 'https://ethereum-mainnet.core.chainstack.com/b4992d373edbb4026efb4639cfe88a76'
+ENDPOINT = getenv("CHAINLINK_ENDPOINT")
 
 PRICE_FEEDS = {
     "BTC": "0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",  # BTC/USD
