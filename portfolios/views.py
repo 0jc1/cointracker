@@ -84,7 +84,7 @@ class PortfolioBalanceOverTimeView(APIView):
 def update_wallet_balances(user_wallets):
     for wallet in user_wallets:
         balance = Decimal("0.00")
-        
+
         if wallet.wallet_type == "BTC":
             balance = get_address_balance_btc(wallet.address)
         elif wallet.wallet_type == "ETH":
