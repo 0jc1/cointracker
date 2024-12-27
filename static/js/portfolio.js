@@ -1,6 +1,33 @@
 // portfolio.js
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Copy to clipboard functionality
+    document.querySelectorAll('.copy-button').forEach(button => {
+        button.addEventListener('click', async () => {
+            const address = button.dataset.address;
+            try {
+                await navigator.clipboard.writeText(address);
+                
+                // Visual feedback
+                button.classList.add('copied');
+                const originalHTML = button.innerHTML;
+                button.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                `;
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    button.classList.remove('copied');
+                    button.innerHTML = originalHTML;
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy:', err);
+            }
+        });
+    });
+
     const ctx = document.getElementById('canvas1').getContext('2d');
 
     const gradient = ctx.createLinearGradient(0, 0, 0, 400);

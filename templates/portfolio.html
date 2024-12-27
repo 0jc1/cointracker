@@ -93,9 +93,15 @@
               <!-- Display the coin type with "Wallet" appended -->
               <td class="table_cell1">{{ wallet.name }}</td>
 
-              <!-- Display the wallet address with overflow handling -->
+              <!-- Display the wallet address with overflow handling and copy button -->
               <td class="table_cell1 address-cell" title="{{ wallet.address }}">
-                {{ wallet.address|slice:":6" }}...{{ wallet.address|slice:"-4:" }}
+                <span>{{ wallet.address|slice:":6" }}...{{ wallet.address|slice:"-4:" }}</span>
+                <button class="copy-button" data-address="{{ wallet.address }}" title="Copy address">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                </button>
               </td>
 
               <!-- Display the wallet's total value -->
@@ -133,6 +139,33 @@
 <script src="https://cdn.jsdelivr.net/npm/moment"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment"></script>
 
-<script type="module" src="{% static 'js/portfolio.js' %}?v=3"></script>
+<style>
+  .address-cell {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+  }
+  .copy-button {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: #666;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.2s;
+  }
+  .copy-button:hover {
+    background: #f0f0f0;
+    color: #333;
+  }
+  .copy-button.copied {
+    color: #28a745;
+    background: #e8f5e9;
+  }
+</style>
+
+<script type="module" src="{% static 'js/portfolio.js' %}?v=4"></script>
 
 {% endblock content %}
