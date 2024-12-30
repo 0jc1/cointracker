@@ -1,3 +1,7 @@
+body {
+  background-color: #e6f3ff;  /* Changed to a light blue */
+}
+
 /* New class to show the modal */
 .is-active {
   display: flex !important;
@@ -99,4 +103,129 @@
 .copy-button.copied {
   color: #28a745;
   background: #e8f5e9;
+}
+
+/* Ranking page styles */
+.ranking-description {
+  font-size: 1.4rem;
+  color: #333;
+  margin: 3rem 0;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.table_component {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 2rem auto 4rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  max-width: 1000px;
+}
+
+.table_header {
+  padding: 1.5rem;
+  text-align: left;
+  font-weight: 600;
+  color: #555;
+  border-bottom: 2px solid #eee;
+}
+
+.table_header:nth-child(3),
+.table_header:nth-child(4) {
+  text-align: right;
+}
+
+.table_cell {
+  padding: 1.5rem;
+  vertical-align: middle;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.table_cell:nth-child(3),
+.table_cell:nth-child(4) {
+  text-align: right;
+}
+
+.table_row:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.2s ease;
+}
+
+.table_row:last-child .table_cell {
+  border-bottom: none;
+}
+
+.crypto-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.crypto-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.positive-change {
+  color: #06D6A0;
+  font-weight: 600;
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(6, 214, 160, 0.1);
+}
+
+.negative-change {
+  color: #EF476F;
+  font-weight: 600;
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(239, 71, 111, 0.1);
+}
+
+.no-change {
+  color: #666;
+  font-weight: 600;
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(102, 102, 102, 0.1);
+}
+
+.rank-number {
+  font-weight: 600;
+  color: #666;
+  display: inline-block;
+  min-width: 1.5rem;
+}
+
+/* Container styles */
+.w-container {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 768px) {
+  .w-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .table_cell,
+  .table_header {
+    padding: 1rem;
+  }
+  
+  .ranking-description {
+    font-size: 1.2rem;
+    margin: 2rem 0;
+  }
 }

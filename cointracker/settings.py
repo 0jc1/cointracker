@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "captcha",
     "accounts",
     "portfolios",
+    "cointracker",
 ]
 
 MIDDLEWARE = [

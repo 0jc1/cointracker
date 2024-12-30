@@ -11,12 +11,10 @@
 
 <section>
   <div class="w-layout-blockcontainer w-container">
-    <div class="text-block-8">
-      <p>
-        Ranking of cryptocurrencies by market capitalization
-      </p>
+    <div class="ranking-description">
+      Top Cryptocurrencies by Market Capitalization
     </div>
-    <table class="table_component" style="font-size: 15px;">
+    <table class="table_component">
       <thead class="table_head">
         <tr class="table_row">
           <th class="table_header">#</th>
@@ -28,26 +26,22 @@
       <tbody class="table_body">
         {% for coin in coins %}
         <tr class="table_row">
-          <td class="table_cell">{{ forloop.counter }}</td>
+          <td class="table_cell"><span class="rank-number">{{ forloop.counter }}</span></td>
           <td class="table_cell">
-
-            <p style="text-align: left;">
-              <!-- <img src="{% static 'images/'|add:coin.ticker|add:'.png' %}" alt="{{ coin.ticker }} icon"class="crypto-icon"> -->
-              <img src="https://public-assets.ramzinex.com/public/currencies/logo/{{ coin.ticker }}.png" class="crypto-icon">
-              {{ coin.ticker}}
-            </p>
+            <div class="crypto-name-cell">
+              <img src="{% static 'images/'|add:coin.ticker|add:'.png' %}" alt="{{ coin.ticker }} icon" class="crypto-icon">
+              <span class="crypto-ticker">{{ coin.ticker }}</span>
+            </div>
           </td>
           <td class="table_cell">${{ coin.price|floatformat:2|intcomma }}</td>
           <td class="table_cell">
-            <!--
-              {% if coin.change_24h > 0 %}
-                <span class="positive-change">{{ coin.change_24h }}%</span>
-              {% elif coin.change_24h < 0 %}
-                <span class="negative-change">{{ coin.change_24h }}%</span>
-              {% else %}
-                <span class="no-change">{{ coin.change_24h }}%</span>
-              {% endif %}
-              -->
+            {% if coin.change_24h > 0 %}
+              <span class="positive-change">+{{ coin.change_24h|floatformat:2 }}%</span>
+            {% elif coin.change_24h < 0 %}
+              <span class="negative-change">{{ coin.change_24h|floatformat:2 }}%</span>
+            {% else %}
+              <span class="no-change">{{ coin.change_24h|floatformat:2 }}%</span>
+            {% endif %}
           </td>
         </tr>
         {% empty %}
