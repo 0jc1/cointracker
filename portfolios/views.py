@@ -59,7 +59,6 @@ class PortfolioBalanceOverTimeView(APIView):
         # Convert queryset to list of dictionaries for easier processing
         portfolio_data = list(portfolio_entries)
 
-        # Sort the portfolio data by date to ensure chronological order
         portfolio_data.sort(key=lambda x: x["timestamp__date"])
 
         # Create a dictionary to hold the latest balance up to each date

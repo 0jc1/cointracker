@@ -13,7 +13,7 @@ def index_view(request):
 
     coins = []
     for symbol, price in prices.items():
-        if symbol.lower() == "btc":
+        if symbol.lower() == "btc" or symbol.lower() == "eth":
             coins.append({"ticker": symbol.lower(), "price": price})
 
     return render(request, "index.html", {"coins": coins})
