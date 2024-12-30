@@ -20,12 +20,10 @@ PRICE_FEEDS = {
     "BNB": "0x14e613AC84a31f709eadbdF89C6CC390fDc9540A",  # BNB/USD
     "SOL": "0x4ffC43a60e009B551865A93d232E33Fce9f01507",  # SOL/USD
     "MATIC": "0x7bAC85A8a13A4BcD8abb3eB7d6b4d632c5a57676",  # MATIC/USD
-    
     # Stablecoins
     "USDT": "0x3E7d1eAB13ad0104d2750B8863b489D65364e32D",  # USDT/USD
     "USDC": "0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",  # USDC/USD
     "DAI": "0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9",  # DAI/USD
-    
     # DeFi Tokens
     "AAVE": "0x547a514d5e3769680Ce22B2361c10Ea13619e8a9",  # AAVE/USD
     "UNI": "0x553303d460EE0afB37EdFf9bE42922D8FF63220e",  # UNI/USD
@@ -33,7 +31,6 @@ PRICE_FEEDS = {
     "SNX": "0xDC3EA94CD0AC27d9A86C180091e7f78C683d3699",  # SNX/USD
     "CRV": "0xCd627aA160A6fA45Eb793D19Ef54f5062F20f33f",  # CRV/USD
     "COMP": "0xdbd020CAeF83eFd542f4De03e3cF0C28A4428bd5",  # COMP/USD
-    
     # Layer 1s
     "AVAX": "0xFF3EEb22B5E3dE6e705b44749C2559d704923FD7",  # AVAX/USD
 }
@@ -157,7 +154,10 @@ def get_cached_or_refresh_prices():
         return _cached_prices
 
     # If data is stale, update in background
-    if _last_update_time is not None and (time.time() - _last_update_time) > _CACHE_EXPIRY:
+    if (
+        _last_update_time is not None
+        and (time.time() - _last_update_time) > _CACHE_EXPIRY
+    ):
         print("Refreshing prices in background")
         thread = threading.Thread(target=_update_prices_in_background)
         thread.start()
