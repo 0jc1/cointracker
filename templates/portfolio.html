@@ -66,16 +66,17 @@
           <tbody class="table_body">
             {% for holding in holdings_data %}
             <tr class="table_row">
-              <td class="table_cell1" style="text-align: left;">
+              <td class="table_cell1" style="text-align: left;" data-label="Name">
                 <img src="{% static 'images/'|add:holding.ticker|add:'.png' %}" class="crypto-icon">
 
                 <span>{{ holding.currency }}</span>
               </td>
-              <td class="table_cell1">{{ holding.amount }}</td>
-              <td class="table_cell1">${{ holding.value |floatformat:2|intcomma }}</td>
-              <td class="table_cell1">${{ holding.latest_price |floatformat:2|intcomma }}</td>
+              <td class="table_cell1" data-label="Amount">{{ holding.amount }}</td>
+              <td class="table_cell1" data-label="Value">${{ holding.value |floatformat:2|intcomma }}</td>
+              <td class="table_cell1" data-label="Price">${{ holding.latest_price |floatformat:2|intcomma }}</td>
               <td
-                class="table_cell1 {% if holding.change > 0 %}positive-change{% elif holding.change < 0 %}negative-change{% endif %}">
+                class="table_cell1 {% if holding.change > 0 %}positive-change{% elif holding.change < 0 %}negative-change{% endif %}"
+                data-label="24h Change">
                 {% if holding.change > 0 %}+{% endif %}{{ holding.change }}%
               </td>
             </tr>
@@ -105,10 +106,10 @@
             {% for wallet in user_wallets %}
             <tr class="table_row">
               <!-- Display the coin type with "Wallet" appended -->
-              <td class="table_cell1">{{ wallet.name }}</td>
+              <td class="table_cell1" data-label="Name">{{ wallet.name }}</td>
 
               <!-- Display the wallet address with overflow handling and copy button -->
-              <td class="table_cell1 address-cell" title="{{ wallet.address }}">
+              <td class="table_cell1 address-cell" title="{{ wallet.address }}" data-label="Address">
                 <span>{{ wallet.address|slice:":6" }}...{{ wallet.address|slice:"-4:" }}</span>
                 <button class="copy-button" data-address="{{ wallet.address }}" title="Copy address">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -120,12 +121,12 @@
               </td>
 
               <!-- Display the wallet's total value -->
-              <td class="table_cell1">${{ wallet.value |floatformat:2|intcomma }}</td>
+              <td class="table_cell1" data-label="Value">${{ wallet.value |floatformat:2|intcomma }}</td>
 
               <!-- Display the wallet's allocation -->
-              <td class="table_cell1">{{ wallet.allocation }}%</td>
+              <td class="table_cell1" data-label="Allocation">{{ wallet.allocation }}%</td>
 
-              <td class="table_cell1">
+              <td class="table_cell1" data-label="Action">
                 <a href="{% url 'remove_wallet' wallet.wallet.id %}" class="f-button-action w-button w-inline-block">
                   <div>Remove</div>
                 </a>

@@ -36,6 +36,7 @@ body {
 
 .grid {
   grid-row-gap: 12px !important;
+  padding: 1rem;
 }
 
 .dropdown {
@@ -45,14 +46,12 @@ body {
 
 .crypto-list {
   list-style: none;
-  padding-top: 8px;
-  margin-left: 20px;
+  padding: 8px 0;
+  margin: 0;
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
-  /* Add spacing between items */
-  gap: 32px;
-
+  gap: 16px;
 }
 
 .crypto-item {
@@ -84,7 +83,9 @@ body {
 .address-cell {
   align-items: center;
   gap: 8px;
+  display: flex;
 }
+
 .copy-button {
   background: none;
   border: none;
@@ -95,24 +96,31 @@ body {
   display: inline-flex;
   align-items: center;
   transition: all 0.2s;
+  min-width: 24px;
+  min-height: 24px;
+  justify-content: center;
 }
+
 .copy-button:hover {
   background: #f0f0f0;
   color: #333;
 }
+
 .copy-button.copied {
   color: #28a745;
   background: #e8f5e9;
 }
 
+/* Table Styles with Mobile Responsiveness */
 .table_component {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  margin: 2rem auto 4rem;
+  margin: 1rem auto;
   background: white;
   border-radius: 12px;
   max-width: 1000px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .table_header {
@@ -128,18 +136,18 @@ body {
   text-align: right;
 }
 
-.table_cell {
-  padding: 1.5rem;
+.table_cell1 {
+  padding: 1rem;
   vertical-align: middle;
   border-bottom: 1px solid #f0f0f0;
 }
 
-.table_cell:nth-child(3),
-.table_cell:nth-child(4) {
+.table_cell1:nth-child(3),
+.table_cell1:nth-child(4) {
   text-align: right;
 }
 
-.table_row:last-child .table_cell {
+.table_row:last-child .table_cell1 {
   border-bottom: none;
 }
 
@@ -152,6 +160,8 @@ body {
   height: 400px;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
 .chart-controls {
@@ -212,19 +222,156 @@ body {
   min-height: 0;
 }
 
-/* Fix grid layout */
+/* Grid Layout */
 .w-layout-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
 }
 
-@media screen and (min-width: 768px) {
-  .w-layout-grid {
-    grid-template-columns: repeat(2, 1fr);
+.div-block-5 {
+  grid-column: 1 / -1;
+}
+
+/* Add Wallet Button */
+.f-button-apple {
+  display: inline-flex;
+  padding: 0.75rem 1.5rem;
+  background: #007bff;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  margin-top: 1rem;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.f-button-apple:hover {
+  background: #0056b3;
+}
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+  .grid {
+    padding: 0.5rem;
+  }
+
+  .table_component {
+    margin: 0.5rem auto 1rem;
+    font-size: 13px;
+    border-radius: 8px;
+  }
+  
+  /* Stack table cells vertically on mobile */
+  .table_component thead {
+    display: none; /* Hide table headers on mobile */
+  }
+
+  .table_row {
+    display: block;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  .table_row:last-child {
+    border-bottom: none;
+  }
+
+  .table_cell1 {
+    display: flex;
+    padding: 0.5rem 0;
+    border: none;
+    align-items: center;
+    text-align: left !important;
+  }
+
+  .table_cell1:before {
+    content: attr(data-label);
+    font-weight: 600;
+    min-width: 40%;
+    margin-right: 1rem;
+    color: #555;
+  }
+
+  .crypto-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 6px;
+  }
+
+  .chart-controls {
+    justify-content: center;
+  }
+  
+  .time-period-selector {
+    width: 100%;
+    justify-content: space-between;
+    padding: 0.25rem;
+  }
+
+  .period-btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 13px;
+  }
+
+  .address-cell {
+    flex-wrap: wrap;
+  }
+
+  .address-cell:before {
+    content: attr(data-label);
+    font-weight: 600;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    color: #555;
+  }
+
+  .address-cell span {
+    width: auto;
+    flex: 1;
+  }
+
+  .chart-container {
+    height: 300px;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .positive-change, .negative-change {
+    padding: 0.15rem 0.35rem;
+    font-size: 12px;
+    margin-left: auto;
+  }
+
+  .f-button-apple {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 14px;
+  }
+
+  /* Better spacing for small screens */
+  .div-block-2-copy2, .div-block-4 {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Empty state messages */
+  .table_cell1[colspan="5"] {
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .table_cell1[colspan="5"]:before {
+    display: none;
   }
 }
 
-.div-block-5 {
-  grid-column: 1 / -1;
+@media screen and (min-width: 769px) {
+  .w-layout-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid {
+    padding: 2rem;
+  }
 }
