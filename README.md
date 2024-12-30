@@ -31,4 +31,6 @@ python3 manage.py runserver
 As an open-source project, we welcome contributions from developers, designers, and crypto users.
 
 ## Screenshots
-![Screenshot 2024-12-23 at 1 47 53 PM](https://github.com/user-attachments/assets/1a1e2cb6-cf4a-4c0d-a857-c8f92d0a574f)
+
+![Screenshot 2024-12-30 at 12 09 05 PM](https://github.com/user-attachments/assets/d503c614-6cac-4793-97d4-4d3af81dfa2b)
+
