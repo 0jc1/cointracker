@@ -106,7 +106,7 @@
             {% for wallet in user_wallets %}
             <tr class="table_row">
               <!-- Display the coin type with "Wallet" appended -->
-              <td class="table_cell1" data-label="Name">{{ wallet.name }}</td>
+              <td class="table_cell1 wallet-name" data-label="Name">{{ wallet.name }}</td>
 
               <!-- Display the wallet address with overflow handling and copy button -->
               <td class="table_cell1 address-cell" title="{{ wallet.address }}" data-label="Address">

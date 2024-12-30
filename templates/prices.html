@@ -4,7 +4,7 @@
 <section class="section" style="border-bottom: 1px solid #e4ebf3;">
     <ul class="crypto-list">
         {% for coin in coins %}
-            <li class="crypto-item">
+            <li class="crypto-item" style="margin-left: 20px;">
                 <img src="{% static 'images/'|add:coin.ticker|add:'.png' %}" alt="{{ coin.ticker }} icon" class="crypto-icon">
                 <span class="crypto-ticker">{{ coin.ticker }}</span>
                 <span class="crypto-price">

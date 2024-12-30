@@ -83,7 +83,16 @@ body {
 .address-cell {
   align-items: center;
   gap: 8px;
-  display: flex;
+}
+
+.wallet-name {
+  overflow: hidden;
+  text-wrap: nowrap;
+}
+
+section {
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 .copy-button {
@@ -119,13 +128,12 @@ body {
   margin: 1rem auto;
   background: white;
   border-radius: 12px;
-  max-width: 1000px;
+  max-width: 1200px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .table_header {
-  padding: 1rem;
-  text-align: left;
+  padding: 0.8rem;
   font-weight: 600;
   color: #555;
   border-bottom: 2px solid #eee;
@@ -137,7 +145,6 @@ body {
 }
 
 .table_cell1 {
-  padding: 1rem;
   vertical-align: middle;
   border-bottom: 1px solid #f0f0f0;
 }
@@ -235,9 +242,6 @@ body {
 
 /* Add Wallet Button */
 .f-button-apple {
-  display: inline-flex;
-  padding: 0.75rem 1.5rem;
-  background: #007bff;
   color: white;
   border-radius: 6px;
   text-decoration: none;
