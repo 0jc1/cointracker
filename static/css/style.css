@@ -165,12 +165,6 @@ body {
   gap: 16px;
 }
 
-.crypto-icon {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-}
-
 .positive-change {
   color: #06D6A0;
   font-weight: 600;
@@ -228,4 +222,57 @@ body {
     font-size: 1.2rem;
     margin: 2rem 0;
   }
+}
+
+/* Transactions page */
+
+.transactions-section {
+  padding: 2rem 0;
+}
+
+.transactions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.transaction-filters {
+  display: flex;
+  gap: 1rem;
+}
+
+.transactions-table {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.badge i {
+  margin-right: 4px;
+}
+
+.badge-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.badge-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.transactions-pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination {
+  margin: 0;
 }

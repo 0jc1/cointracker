@@ -6,12 +6,80 @@
 {% block content %}
 {% include "navbar.html" %}
 {% include "tab.html" %}
-<section>
+<section class="transactions-section">
   <div class="w-layout-blockcontainer w-container">
-    <h1>Transactions</h1>
-    <div class="div-block-5">
-        <p>Nothing to see here yet.</p>
+    <div class="transactions-header">
+      <h1>Transactions</h1>
+      <div class="transaction-filters">
+        <select class="form-control selectpicker" data-live-search="true">
+          <option value="all">All Wallets</option>
+          <option value="wallet1">Wallet 1</option>
+          <option value="wallet2">Wallet 2</option>
+        </select>
+        <select class="form-control selectpicker" data-live-search="true">
+          <option value="all">All Types</option>
+          <option value="in">Incoming</option>
+          <option value="out">Outgoing</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="transactions-table">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Asset</th>
+            <th>Amount</th>
+            <th>Wallet</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Example transactions -->
+          <tr>
+            <td><span class="badge badge-success"><i class="fas fa-arrow-down"></i> IN</span></td>
+            <td>2024-01-15 14:30</td>
+            <td>
+              <img src="{% static 'images/btc.png' %}" alt="BTC" class="crypto-icon">
+              BTC
+            </td>
+            <td>0.25 BTC</td>
+            <td>Wallet 1</td>
+            <td><span class="badge badge-success">Completed</span></td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-danger"><i class="fas fa-arrow-up"></i> OUT</span></td>
+            <td>2024-01-14 09:15</td>
+            <td>
+              <img src="{% static 'images/eth.png' %}" alt="ETH" class="crypto-icon">
+              ETH
+            </td>
+            <td>2.5 ETH</td>
+            <td>Wallet 2</td>
+            <td><span class="badge badge-success">Completed</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="transactions-pagination">
+      <nav aria-label="Transaction navigation">
+        <ul class="pagination">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </section>
+
 {% endblock content %}

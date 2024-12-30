@@ -6,34 +6,248 @@
 {% block content %}
 {% include "navbar.html" %}
 {% include "tab.html" %}
-<section>
+<section class="settings-section">
   <div class="w-layout-blockcontainer container-4 w-container">
     <h1>Settings</h1>
-    <div class="w-form">
-      <form id="email-form" name="email-form" data-name="Email Form" method="get"
-        data-wf-page-id="675e1c984314f55d5e170518" data-wf-element-id="db1c26d0-ac1d-872b-d1e9-e1de3ebed8cb">
-        <div data-hover="false" data-delay="0" class="w-dropdown">
-          <div class="w-dropdown-toggle">
-            <div class="w-icon-dropdown-toggle"></div>
-            <div>USD</div>
-          </div>
-          <nav class="w-dropdown-list">
-            <a href="#" class="w-dropdown-link">Link 1</a>
-            <a href="#" class="w-dropdown-link">Link 2</a>
-            <a href="#" class="w-dropdown-link">Link 3</a>
-          </nav>
-        </div><label class="w-checkbox"><input type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox"
-            class="w-checkbox-input"><span class="w-form-label" for="checkbox">Checkbox</span></label><input
-          type="submit" data-wait="Please wait..." class="w-button" value="Submit">
-      </form>
-      <div class="w-form-done">
-        <div>Thank you! Your submission has been received!</div>
+    
+    <div class="settings-container">
+      <!-- Currency Preferences -->
+      <div class="settings-group">
+        <h3><i class="fas fa-dollar-sign"></i> Currency Preferences</h3>
+        <div class="setting-item">
+          <label>Display Currency</label>
+          <select class="form-control selectpicker" data-live-search="true">
+            <option value="USD">USD - US Dollar</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="GBP">GBP - British Pound</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+            <option value="AUD">AUD - Australian Dollar</option>
+          </select>
+        </div>
       </div>
-      <div class="w-form-fail">
-        <div>Oops! Something went wrong while submitting the form.</div>
+
+      <!-- Theme Settings -->
+      <div class="settings-group">
+        <h3><i class="fas fa-paint-brush"></i> Theme Settings</h3>
+        <div class="setting-item">
+          <label>Theme Mode</label>
+          <div class="theme-selector">
+            <label class="theme-option">
+              <input type="radio" name="theme" value="light" checked>
+              <span class="theme-label">
+                <i class="fas fa-sun"></i> Light
+              </span>
+            </label>
+            <label class="theme-option">
+              <input type="radio" name="theme" value="dark">
+              <span class="theme-label">
+                <i class="fas fa-moon"></i> Dark
+              </span>
+            </label>
+            <label class="theme-option">
+              <input type="radio" name="theme" value="system">
+              <span class="theme-label">
+                <i class="fas fa-laptop"></i> System
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notification Settings -->
+      <div class="settings-group">
+        <h3><i class="fas fa-bell"></i> Notifications</h3>
+        <div class="setting-item">
+          <label class="switch-label">
+            <span>Price Alerts</span>
+            <label class="switch">
+              <input type="checkbox" checked>
+              <span class="slider round"></span>
+            </label>
+          </label>
+        </div>
+        <div class="setting-item">
+          <label class="switch-label">
+            <span>Transaction Notifications</span>
+            <label class="switch">
+              <input type="checkbox" checked>
+              <span class="slider round"></span>
+            </label>
+          </label>
+        </div>
+        <div class="setting-item">
+          <label class="switch-label">
+            <span>Newsletter</span>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </label>
+        </div>
+      </div>
+
+      <!-- Save Button -->
+      <div class="settings-actions">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+.settings-section {
+  padding: 2rem 0;
+}
+
+.settings-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.settings-group {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.settings-group h3 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.settings-group h3 i {
+  margin-right: 0.5rem;
+  color: #007bff;
+}
+
+.setting-item {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.setting-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.setting-item label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+.theme-selector {
+  display: flex;
+  gap: 1rem;
+}
+
+.theme-option {
+  flex: 1;
+  position: relative;
+}
+
+.theme-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+
+.theme-label {
+  display: block;
+  padding: 0.75rem;
+  text-align: center;
+  background: #f8f9fa;
+  border: 2px solid #dee2e6;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.theme-option input[type="radio"]:checked + .theme-label {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.switch-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #007bff;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 24px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.settings-actions {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  padding: 0.5rem 2rem;
+  font-size: 1.1rem;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+</style>
 
 {% endblock content %}
