@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+{% load static_hash %}
 
 {% block title %}Portfolio{% endblock title %}
 
@@ -35,8 +36,18 @@
         </div>
       </div>
 
-      <div class="div-block-5">
-        <canvas id="canvas1" style="width: 100%" height="300" aria-label="Chart"></canvas>
+      <div class="div-block-5 chart-container">
+        <div class="chart-controls">
+          <div class="time-period-selector">
+            <button class="period-btn" data-period="1d">1D</button>
+            <button class="period-btn" data-period="7d">7D</button>
+            <button class="period-btn active" data-period="30d">30D</button>
+            <button class="period-btn" data-period="90d">90D</button>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="canvas1" aria-label="Chart"></canvas>
+        </div>
       </div>
 
       <!-- Holdings Table -->
@@ -143,6 +154,6 @@
 <script src="https://cdn.jsdelivr.net/npm/moment"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment"></script>
 
-<script type="module" src="{% static 'js/portfolio.js' %}?v=4"></script>
+<script type="module" src="{% static 'js/portfolio.js' %}?v={% static_hash 'js/portfolio.js' %}"></script>
 
 {% endblock content %}

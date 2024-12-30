@@ -105,16 +105,6 @@ body {
   background: #e8f5e9;
 }
 
-/* Ranking page styles */
-.ranking-description {
-  font-size: 1.4rem;
-  color: #333;
-  margin: 3rem 0;
-  text-align: center;
-  font-weight: 500;
-  line-height: 1.5;
-}
-
 .table_component {
   width: 100%;
   border-collapse: separate;
@@ -122,12 +112,11 @@ body {
   margin: 2rem auto 4rem;
   background: white;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   max-width: 1000px;
 }
 
 .table_header {
-  padding: 1.5rem;
+  padding: 1rem;
   text-align: left;
   font-weight: 600;
   color: #555;
@@ -150,19 +139,53 @@ body {
   text-align: right;
 }
 
-.table_row:hover {
-  background-color: #f8f9fa;
-  transition: background-color 0.2s ease;
-}
-
 .table_row:last-child .table_cell {
   border-bottom: none;
 }
 
-.crypto-name-cell {
+/* Chart Styles */
+.chart-container {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  height: 400px;
   display: flex;
-  align-items: center;
-  gap: 16px;
+  flex-direction: column;
+}
+
+.chart-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.time-period-selector {
+  display: flex;
+  gap: 0.5rem;
+  background: #f8f9fa;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+.period-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #666;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.period-btn:hover {
+  background: #e9ecef;
+}
+
+.period-btn.active {
+  background: #007bff;
+  color: white;
 }
 
 .positive-change {
@@ -183,96 +206,25 @@ body {
   background: rgba(239, 71, 111, 0.1);
 }
 
-.no-change {
-  color: #666;
-  font-weight: 600;
-  display: inline-block;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  background: rgba(102, 102, 102, 0.1);
+.chart-wrapper {
+  flex: 1;
+  position: relative;
+  min-height: 0;
 }
 
-.rank-number {
-  font-weight: 600;
-  color: #666;
-  display: inline-block;
-  min-width: 1.5rem;
-}
-
-/* Container styles */
-.w-container {
-  padding-left: 2rem;
-  padding-right: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-@media screen and (max-width: 768px) {
-  .w-container {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  
-  .table_cell,
-  .table_header {
-    padding: 1rem;
-  }
-  
-  .ranking-description {
-    font-size: 1.2rem;
-    margin: 2rem 0;
-  }
-}
-
-/* Transactions page */
-
-.transactions-section {
-  padding: 2rem 0;
-}
-
-.transactions-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.transaction-filters {
-  display: flex;
+/* Fix grid layout */
+.w-layout-grid {
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 1rem;
 }
 
-.transactions-table {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  margin-bottom: 2rem;
+@media screen and (min-width: 768px) {
+  .w-layout-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.badge {
-  padding: 6px 12px;
-  border-radius: 20px;
-}
-
-.badge i {
-  margin-right: 4px;
-}
-
-.badge-success {
-  background-color: #28a745;
-  color: white;
-}
-
-.badge-danger {
-  background-color: #dc3545;
-  color: white;
-}
-
-.transactions-pagination {
-  display: flex;
-  justify-content: center;
-}
-
-.pagination {
-  margin: 0;
+.div-block-5 {
+  grid-column: 1 / -1;
 }

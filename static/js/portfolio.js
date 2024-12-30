@@ -28,22 +28,46 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Chart setup
     const ctx = document.getElementById('canvas1').getContext('2d');
+    let myChart = null;
 
     const gradient = ctx.createLinearGradient(0, 0, 0, 400);
     gradient.addColorStop(0, 'rgb(64, 174, 248)'); // Top color (semi-transparent)
     gradient.addColorStop(1, 'rgba(215, 226, 233, 0.15)');   // Bottom color (transparent)
 
-    fetch('/api/portfolio/balance/', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken'), // If using CSRF tokens
-        },
-        credentials: 'include', // Include cookies for authentication
-    })
+    // Period button handling
+    const periodButtons = document.querySelectorAll('.period-btn');
+    periodButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Update active state
+            periodButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            // Fetch new data
+            fetchChartData(button.dataset.period);
+        });
+    });
+
+    // Initial chart data fetch
+    fetchChartData('30d');
+
+    function fetchChartData(period) {
+        fetch(`/api/portfolio/balance/?period=${period}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'), // If using CSRF tokens
+            },
+            credentials: 'include', // Include cookies for authentication
+        })
         .then(response => response.json())
         .then(data => {
+            // Destroy existing chart if it exists
+            if (myChart) {
+                myChart.destroy();
+            }
+
             const chartData = {
                 labels: data.labels,
                 datasets: [{
@@ -111,20 +135,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             };
 
-            const myChart = new Chart(ctx, config);
+            myChart = new Chart(ctx, config);
         })
         .catch(error => {
             console.error('Error fetching portfolio balance:', error);
         });
+    }
 
-    // Helper function to get CSRF token (if needed)
+    // Helper function to get CSRF token
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
             const cookies = document.cookie.split(';');
             for (let i = 0; i < cookies.length; i++) {
                 const cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
                 if (cookie.substring(0, name.length + 1) === (name + '=')) {
                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                     break;

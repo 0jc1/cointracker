@@ -53,6 +53,67 @@
     </table>
   </div>
 </section>
+
+<style>
+  * Ranking page styles */
+.ranking-description {
+  font-size: 1.4rem;
+  color: #333;
+  margin: 3rem 0;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.crypto-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.no-change {
+  color: #666;
+  font-weight: 600;
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(102, 102, 102, 0.1);
+}
+
+.rank-number {
+  font-weight: 600;
+  color: #666;
+  display: inline-block;
+  min-width: 1.5rem;
+}
+
+/* Container styles */
+.w-container {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 768px) {
+  .w-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .table_cell,
+  .table_header {
+    padding: 1rem;
+  }
+  
+  .ranking-description {
+    font-size: 1.2rem;
+    margin: 2rem 0;
+  }
+}
+
+</style>
+
 {% include "footer.html" %}
 
 {% endblock content %}

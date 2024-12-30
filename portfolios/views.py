@@ -20,9 +20,21 @@ class PortfolioBalanceOverTimeView(APIView):
 
     def get(self, request, format=None):
         user = request.user
+        period = request.GET.get('period', '30d')  # Default to 30 days
 
         end_date = timezone.now().date()
-        start_date = end_date - timedelta(days=20)
+        
+        # Calculate start date based on period
+        if period == '1d':
+            start_date = end_date - timedelta(days=1)
+        elif period == '7d':
+            start_date = end_date - timedelta(days=7)
+        elif period == '30d':
+            start_date = end_date - timedelta(days=30)
+        elif period == '90d':
+            start_date = end_date - timedelta(days=90)
+        else:
+            start_date = end_date - timedelta(days=30)  # Default fallback
 
         # Prepare a list of dates
         date_list = [
