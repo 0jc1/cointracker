@@ -8,8 +8,9 @@ class PortfoliosConfig(AppConfig):
 
     def ready(self):
         import portfolios.signals  # noqa
-        
+
         # Only start the background task in the main process
-        if os.environ.get('RUN_MAIN', None) != 'true':
+        if os.environ.get("RUN_MAIN", None) != "true":
             from portfolios.tasks import start_portfolio_updates
+
             start_portfolio_updates()
