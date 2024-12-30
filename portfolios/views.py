@@ -4,7 +4,7 @@ from django.contrib import messages
 from .models import Wallet, Holding, CryptoPrice, Portfolio
 from .forms import WalletForm
 from decimal import Decimal
-from services.crypto_price import get_crypto_price, get_latest_price, get_price_24h_ago
+from services.crypto_price import get_latest_price, get_price_24h_ago
 from services.balance import *
 from rest_framework.views import APIView
 from rest_framework.response import Response

@@ -15,6 +15,9 @@ import django_heroku
 import dj_database_url
 import os
 
+# heroku config:set IS_HEROKU=1
+IS_HEROKU = os.environ.get('IS_HEROKU', None)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,10 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-y7h%msliu4e3_aq+3cnvi=c1mb6d)h%law&yvf!k!7)0hsdc!h"
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-y7h%msliu4e3_aq+3cnvi=c1mb6d)h%law&yvf!k!7)0hsdc!h')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = not IS_HEROKU  # True in development, False in Heroku
 
 ALLOWED_HOSTS = ["*"]
 
@@ -87,9 +90,10 @@ DATABASES = {
     }
 }
 
-# heroku postgresql db
-# db_from_env = dj_database_url.config(conn_max_age=600)
-# DATABASES['default'].update(db_from_env)
+# Configure database for Heroku if in production
+if IS_HEROKU:
+    db_from_env = dj_database_url.config(conn_max_age=600)
+    DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -132,7 +136,9 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",  # if you have a static folder in your project root
 ]
 
-# django_heroku.settings(locals())
+# Configure Django-Heroku if in production
+if IS_HEROKU:
+    django_heroku.settings(locals())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
