@@ -16,7 +16,7 @@ import dj_database_url
 import os
 
 # heroku config:set IS_HEROKU=1
-IS_HEROKU = os.environ.get('IS_HEROKU', None)
+IS_HEROKU = os.environ.get('IS_HEROKU', False)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
