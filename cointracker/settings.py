@@ -15,7 +15,7 @@ import django_heroku
 import dj_database_url
 import os
 
-# heroku config:set IS_HEROKU=1
+# heroku config:set IS_HEROKU=True
 IS_HEROKU = os.environ.get('IS_HEROKU', False)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

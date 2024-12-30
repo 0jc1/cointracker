@@ -202,7 +202,7 @@ def portfolio_view(request):
         holdings_data.append(
             {
                 "currency": h["currency"],
-                "ticker": h["ticker"],
+                "ticker": h["ticker"].lower(),
                 "amount": h["amount"],
                 "latest_price": h["latest_price"],
                 "value": h["value"],
