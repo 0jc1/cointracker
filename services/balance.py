@@ -8,6 +8,7 @@ from dataclasses import dataclass
 # Cache configuration
 CACHE_TTL = 60  # seconds
 
+
 @dataclass
 class CoinConfig:
     """Configuration for each supported coin's balance fetching"""
