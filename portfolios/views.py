@@ -96,14 +96,7 @@ def update_wallet_balances(user_wallets):
     for wallet in user_wallets:
         balance = Decimal("0.00")
 
-        if wallet.wallet_type == "BTC":
-            balance = get_address_balance_btc(wallet.address)
-        elif wallet.wallet_type == "ETH":
-            balance = get_address_balance_eth(wallet.address)
-        elif wallet.wallet_type == "SOL":
-            balance = get_address_balance_sol(wallet.address)
-        elif wallet.wallet_type == "BNB":
-            balance = get_address_balance_bnb(wallet.address)
+        balance = get_address_balance(wallet.wallet_type, wallet.address)
 
         if balance is not None:
             # wallet.value = balance
