@@ -1,6 +1,6 @@
 # Cointracker
 
-https://cointracker.lol is a free cryptocurrency portfolio tracker built in the Django framework. This project uses Bootstrap 3, FlowUI, Chart.js and vanilla JavaScript for the frontend. 
+Cointracker is a free cryptocurrency portfolio tracker built in the Django framework. This project uses Bootstrap 3, FlowUI, Chart.js and vanilla JavaScript for the frontend. 
 
 Right now, only a few major cryptocurrencies are supported. The core features of the application are mostly done, but more advanced features are still in development. 
 
