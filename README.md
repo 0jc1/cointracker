@@ -21,6 +21,11 @@ Install required python packages.
 pip install -r requirements.txt
 ```
 
+Run database migrations.
+```bash
+python manage.py migrate
+```
+
 Run the server. 
 ```bash
 python3 manage.py runserver
