@@ -31,7 +31,7 @@ multidict==6.1.0
 packaging==24.2
 parsimonious==0.10.0
 pillow==11.0.0
-propcache==0.2.1
+propcache==0.4.1
 psycopg2
 pycryptodome==3.21.0
 pydantic==2.10.3
