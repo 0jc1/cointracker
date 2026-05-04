@@ -1,8 +1,8 @@
 # Cointracker
 
-Cointracker is a free cryptocurrency portfolio tracker built in the Django framework. This project uses Bootstrap 3, FlowUI, Chart.js and vanilla JavaScript for the frontend. 
+Cointracker is a free cryptocurrency portfolio tracker built in the Django framework. This project uses Bootstrap 3, FlowUI, Chart.js and vanilla JavaScript for the frontend.
 
-Right now, only a few major cryptocurrencies are supported. The core features of the application are mostly done, but more advanced features are still in development. 
+Right now, only a few major cryptocurrencies are supported. The core features of the application are mostly done, but more advanced features are still in development.
 
 ## Installation
 Clone the repo and change directories into it.
@@ -19,6 +19,7 @@ python3 -m venv ./env
 Install required python packages.
 ```bash
 pip install -r requirements.txt
+cp .env.example .env
 ```
 
 Run database migrations.
@@ -26,7 +27,7 @@ Run database migrations.
 python manage.py migrate
 ```
 
-Run the server. 
+Run the server.
 ```bash
 python3 manage.py runserver
 ```
@@ -38,4 +39,3 @@ As an open-source project, we welcome contributions from developers, designers, 
 ## Screenshots
 
 ![Screenshot 2024-12-30 at 12 09 05 PM](https://github.com/user-attachments/assets/d503c614-6cac-4793-97d4-4d3af81dfa2b)
-

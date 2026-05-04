@@ -14,6 +14,9 @@ from pathlib import Path
 import django_heroku
 import dj_database_url
 import os
+from dotenv import load_dotenv
+
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
 # heroku config:set IS_HEROKU=True
 IS_HEROKU = os.environ.get("IS_HEROKU", False)
