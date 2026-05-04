@@ -11,7 +11,7 @@ from decimal import Decimal
 
 load_dotenv()
 
-# probably need to get this somehow 
+# probably need to get this somehow
 ENDPOINT = getenv("CHAINLINK_ENDPOINT")
 
 PRICE_FEEDS = {
