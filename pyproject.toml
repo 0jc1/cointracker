@@ -4,4 +4,18 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "django-heroku",
+]
+
+# django-heroku declares psycopg2, which builds from source and needs pg_config.
+# Use psycopg2-binary instead so local installs get wheels (same import name: psycopg2).
+[tool.uv]
+dependency-metadata = [
+    { name = "django-heroku", version = "0.3.1", requires-dist = [
+        "dj-database-url>=0.5.0",
+        "whitenoise",
+        "psycopg2-binary>=2.9,<3",
+        "django",
+    ]},
+]
