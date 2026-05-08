@@ -42,7 +42,7 @@ regex==2024.11.6
 requests==2.32.3
 rlp==4.0.1
 sqlparse==0.5.3
-toolz==1.0.0
+toolz==1.1.0
 types-requests==2.32.0.20241016
 typing_extensions==4.12.2
 urllib3==2.2.3
