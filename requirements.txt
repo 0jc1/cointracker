@@ -29,7 +29,7 @@ hexbytes==1.2.1
 idna==3.10
 multidict==6.1.0
 packaging==24.2
-parsimonious==0.10.0
+parsimonious==0.11.0
 pillow==11.0.0
 propcache==0.4.1
 psycopg2
