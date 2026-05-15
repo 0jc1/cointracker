@@ -22,7 +22,7 @@ eth-keys==0.7.0
 eth-rlp==2.1.0
 eth-typing==5.0.1
 eth-utils==5.1.0
-eth_abi==5.1.0
+eth_abi==5.2.0
 frozenlist==1.5.0
 gunicorn==23.0.0
 hexbytes==1.2.1
