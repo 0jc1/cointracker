@@ -46,7 +46,7 @@ toolz==1.1.0
 types-requests==2.32.0.20241016
 typing_extensions==4.12.2
 urllib3==2.2.3
-web3==7.6.0
+web3==7.16.0
 websockets==13.1
 wheel==0.47.0
 whitenoise==6.8.2
